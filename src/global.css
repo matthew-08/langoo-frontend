@@ -1,0 +1,16 @@
+body * {
+    box-sizing: border-box;
+}
+
+body {
+    box-sizing: border-box;
+    width: 100vw;
+    height: 100vh;
+}
+
+#Root,
+.App {
+    width: 100%;
+    min-height: 100vh;
+    overflow-y: scroll;
+}
