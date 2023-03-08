@@ -12,11 +12,24 @@ function MessageInput({ convo }:{ convo:Conversation | undefined }) {
   const dispatch = useAppDispatch();
   const currentUser = useAppSelector((state) => state.authReducer.user.userId);
   const [input, setInput] = useState<string>('');
-  const handleSubmit = (e:React.FormEvent) => {
+  const handleSubmit = async (e:React.FormEvent) => {
     e.preventDefault();
     if (convo) {
       const date = new Date().getTime();
       console.log('sending emit _private_chat');
+      await fetch('http://localhost:3000/convo/sendMessage', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'applicationsjson',
+        },
+        body: JSON.stringify({
+          timestamp: date,
+          content: input,
+          userId: currentUser,
+          conversationId: convo.conversationId,
+        }),
+      });
       socket.emit('private_chat', {
         message: {
           timestamp: date,
@@ -79,7 +92,7 @@ function MessageInput({ convo }:{ convo:Conversation | undefined }) {
           border="2px"
           borderColor="blue.200"
           borderRadius="50%"
-          backgroundColor="blue.200"
+          backgroundColor="blue.400"
           type="submit"
           icon={(
             <ChatIcon

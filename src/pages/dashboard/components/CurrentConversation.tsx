@@ -33,6 +33,7 @@ export default function CurrentConversation() {
       socket.off('chat_message');
     };
   }, []);
+
   useEffect(() => {
     if (convoMessages.length === 0) {
       dispatch(fetchMessages(currentConvo.conversationId));

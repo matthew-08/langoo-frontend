@@ -3,7 +3,7 @@ import {
   Modal, ModalOverlay, ModalContent, ModalFooter, ModalHeader, ModalCloseButton, ModalBody, ButtonGroup, Button,
 } from '@chakra-ui/react';
 import { ArrowBackIcon, WarningIcon } from '@chakra-ui/icons';
-import moment from 'moment';
+import timeago from 'epoch-timeago';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { viewStatusSet } from '../../../features/viewSlice';
 import cat from '../../../assets/cat.jpg';
@@ -70,7 +70,7 @@ export default function ChatHeader() {
             mr="auto"
           >
             {userDetails?.onlineStatus ? 'Online now'
-              : `Last online: ${moment(userDetails?.lastLogin).startOf('hour').fromNow()}`}
+              : `Last online: ${timeago(userDetails.lastLogin)}`}
           </Text>
         </VStack>
       </HStack>

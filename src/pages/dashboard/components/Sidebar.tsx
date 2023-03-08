@@ -17,7 +17,7 @@ const whiteFilter = 'invert(100%) sepia(4%) saturate(7449%) hue-rotate(244deg) b
 export default function Sidebar({ switchView }: Props) {
   return (
     <Flex
-      minW={{ base: '15%', md: '7%' }}
+      minW={{ base: '16%', md: '7%' }}
       minH="100%"
       background="blue.400"
       as="aside"
@@ -28,11 +28,11 @@ export default function Sidebar({ switchView }: Props) {
     >
       <Image
         src={guy}
-        boxSize="80px"
+        boxSize={{ base: '55px', md: '80px' }}
         mb="auto"
         mt="1rem"
         borderRadius="full"
-        border="4px"
+        border={{ base: '2px', md: '4px' }}
         borderColor="blue.400"
       />
       <VStack
@@ -60,8 +60,8 @@ export default function Sidebar({ switchView }: Props) {
         />
         <IconButton
           aria-label="chat-icon"
-          px="1rem"
-          py="2rem"
+          px={{ base: '0.6rem', md: '1rem' }}
+          py={{ base: '1rem', md: '2rem' }}
           _focus={{
             borderColor: '#4299e1',
           }}
@@ -75,8 +75,8 @@ export default function Sidebar({ switchView }: Props) {
           onClick={() => switchView('chat')}
         />
         <IconButton
-          px="1rem"
-          py="2rem"
+          px={{ base: '0.6rem', md: '1rem' }}
+          py={{ base: '1rem', md: '2rem' }}
           aria-label="settings-icon"
           _focus={{
             borderColor: '#4299e1',

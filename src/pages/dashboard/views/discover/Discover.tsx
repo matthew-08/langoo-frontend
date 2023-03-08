@@ -91,9 +91,10 @@ export default function Discover({ setActiveView }: { setActiveView: SetActiveVi
             <TabPanels>
               <SimpleGrid
                 as={TabPanel}
-                minChildWidth={{ base: '300px', md: '440px' }}
+                minChildWidth={{ base: '270px', md: '440px' }}
                 gap="1rem"
                 overflow="auto"
+                padding="0"
               >
                 {usersList.map((user) => (
                   <PersonCard

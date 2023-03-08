@@ -8,14 +8,19 @@ import { LanguageChoices, User, SetActiveView } from '../../../../../types/types
 import { useAppDispatch, useAppSelector } from '../../../../../hooks';
 import { addConvo, setActiveConvo } from '../../../../../features/convoSlice';
 import getflag from '../../../../../utils/getFlag';
+import { viewStatusSet } from '../../../../../features/viewSlice';
 
 export default function PersonCard({ user, setActiveView }:
 { user: User, setActiveView: SetActiveView }) {
   const dispatch = useAppDispatch();
   const convoExists = useAppSelector((state) => state.convoSlice.conversations
     .find((convo) => convo.userId === user.userId));
+  const isSmallerThan700 = useAppSelector((state) => state.viewSlice.smallerThan700);
 
   const handleClick = () => {
+    if (isSmallerThan700) {
+      dispatch(viewStatusSet('userConversation'));
+    }
     if (convoExists) {
       dispatch(setActiveConvo(convoExists.conversationId));
       setActiveView('chat');
@@ -31,10 +36,12 @@ export default function PersonCard({ user, setActiveView }:
       background="#2d3055"
       alignItems="center"
       px="0.5rem"
-      padding={['0.5rem', '1rem']}
+      padding={['0.1rem', '1rem']}
       position="relative"
-      maxH="132px"
+      maxH="140px"
       boxShadow="lg"
+      overflowY="hidden"
+      onClick={() => (isSmallerThan700 ? handleClick() : null)}
     >
       <Box
         position="relative"
@@ -105,6 +112,7 @@ export default function PersonCard({ user, setActiveView }:
         bottom="10px"
         right="10px"
         cursor="pointer"
+        display={isSmallerThan700 ? 'none' : 'block'}
         leftIcon={<ChatIcon />}
         onClick={() => handleClick()}
       >
