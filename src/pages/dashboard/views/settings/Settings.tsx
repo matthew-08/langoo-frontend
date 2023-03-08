@@ -1,10 +1,9 @@
 import {
-  CheckIcon, CloseIcon, EditIcon, SettingsIcon,
+  SettingsIcon,
 } from '@chakra-ui/icons';
 import {
-  Flex, Image, Editable, EditablePreview, useEditableControls, Input, Box, HStack,
-  EditableInput, ButtonGroup, IconButton, VStack, Button,
-  Spacer, Text, Heading,
+  Flex, Image, Box, HStack,
+  VStack, Button, Text, Heading,
 } from '@chakra-ui/react';
 import React from 'react';
 import IMAGES from '../../../../images';

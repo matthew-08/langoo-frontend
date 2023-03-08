@@ -5,6 +5,7 @@ import japan from './assets/flags/japan.png';
 import vietnam from './assets/flags/vietnam.png';
 import globe from './assets/globe.svg';
 import guy from './assets/person.webp';
+import account from './assets/account.svg';
 
 const IMAGES = {
   flags: {
@@ -16,6 +17,7 @@ const IMAGES = {
   },
   globe,
   guy,
+  account,
 };
 
 export default IMAGES;

@@ -1,11 +1,28 @@
 import {
   Flex, IconButton, VStack, Text, Image, Container,
 } from '@chakra-ui/react';
-import react from '../../../assets/react.svg';
+import { useAppSelector, useAppDispatch } from '../../../hooks';
 import IMAGES from '../../../images';
+import { Conversation } from '../../../types/types';
+import { setActiveConvo } from '../../../features/convoSlice';
+import { viewStatusSet } from '../../../features/viewSlice';
 
-export default function Conversation({ chooseConversation }) {
-  const conversationId = '123';
+interface Props {
+  convo : Conversation
+}
+
+export default function UserConversation({ convo }:Props) {
+  const dispatch = useAppDispatch();
+  const isLoading = useAppSelector((state) => state.usersSlice.loading);
+  const user = useAppSelector((state) => state.usersSlice.allUsers
+    .find((u) => u.userId === convo.userId));
+  const isMobileView = useAppSelector((state) => state.viewSlice.smallerThan700);
+  const handleClick = () => {
+    dispatch(setActiveConvo(convo.conversationId));
+    if (isMobileView) {
+      dispatch(viewStatusSet('userConversation'));
+    }
+  };
   return (
     <Flex
       maxW="100%"
@@ -14,10 +31,10 @@ export default function Conversation({ chooseConversation }) {
       padding={['0.5rem', '0.7rem', '0.8rem', '.8rem', '1rem', '1.5rem']}
       borderRadius="10px"
       overflow="hidden"
-      onClick={() => chooseConversation()}
       backgroundColor="#2d3055"
       align="center"
       cursor="pointer"
+      onClick={() => handleClick()}
     >
       <IconButton
         aria-label="user-profile"
@@ -27,7 +44,7 @@ export default function Conversation({ chooseConversation }) {
         mr="0.4rem"
         icon={(
           <Image
-            src={IMAGES.guy}
+            src={user?.userImg}
             boxSize="70px"
             borderRadius="full"
             border="4px"
@@ -51,7 +68,7 @@ export default function Conversation({ chooseConversation }) {
           <Text
             fontWeight="bold"
           >
-            Person
+            {user?.username}
 
           </Text>
           <Text

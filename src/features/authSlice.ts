@@ -1,9 +1,9 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable no-param-reassign */
 import {
-  createSlice, PayloadAction, createAsyncThunk, AnyAction, isPending, isRejected,
+  createSlice, PayloadAction, createAsyncThunk, isPending, isRejected, isFulfilled,
 } from '@reduxjs/toolkit';
 // eslint-disable-next-line import/no-cycle
-import { isFulfilled } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import {
   AuthState, UserAuthSchema, SignUpForm, LoginForm,
@@ -48,7 +48,6 @@ export const checkForSession = createAsyncThunk(
         credentials: 'include',
       },
     );
-
     return response.json();
   },
 );
@@ -82,9 +81,9 @@ SignUpForm,
 );
 
 // All auth actions return fulfilled promises and the same payload if successful.
-const checkFulfilled = (action: AnyAction) => isFulfilled(action);
-const checkPending = (action: AnyAction) => isPending(action);
-const checkRejected = (action: AnyAction) => isRejected(action);
+const checkFulfilled = isFulfilled(registerAttempt, checkForSession, logInAttempt);
+const checkPending = isPending(registerAttempt, checkForSession, logInAttempt);
+const checkRejected = isRejected(registerAttempt, checkForSession, logInAttempt);
 
 const initialState = {
   user: {

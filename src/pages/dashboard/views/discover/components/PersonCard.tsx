@@ -1,12 +1,29 @@
 import React from 'react';
 import {
-  GridItem, Box, Image, VStack, HStack, Heading, Text, Circle, Flex,
+  GridItem, Box, Image, VStack, HStack, Heading, Text, Circle, Flex, Button,
 } from '@chakra-ui/react';
-import { ArrowRightIcon } from '@chakra-ui/icons';
+import { ArrowRightIcon, ChatIcon } from '@chakra-ui/icons';
 import IMAGES from '../../../../../images';
-import person from '../../../../../assets/person.webp';
+import { LanguageChoices, User, SetActiveView } from '../../../../../types/types';
+import { useAppDispatch, useAppSelector } from '../../../../../hooks';
+import { addConvo, setActiveConvo } from '../../../../../features/convoSlice';
+import getflag from '../../../../../utils/getFlag';
 
-export default function PersonCard() {
+export default function PersonCard({ user, setActiveView }:
+{ user: User, setActiveView: SetActiveView }) {
+  const dispatch = useAppDispatch();
+  const convoExists = useAppSelector((state) => state.convoSlice.conversations
+    .find((convo) => convo.userId === user.userId));
+
+  const handleClick = () => {
+    if (convoExists) {
+      dispatch(setActiveConvo(convoExists.conversationId));
+      setActiveView('chat');
+    } else {
+      dispatch(addConvo(user.userId))
+        .then(() => setActiveView('chat'));
+    }
+  };
   return (
     <GridItem
       borderRadius="10px"
@@ -23,7 +40,7 @@ export default function PersonCard() {
         position="relative"
       >
         <Image
-          src={person}
+          src={user.userImg || ''}
           boxSize={['80px', '100px']}
           borderRadius="full"
         />
@@ -32,7 +49,7 @@ export default function PersonCard() {
           position="absolute"
           bottom="5px"
           left="-5px"
-          src={IMAGES.flags.france}
+          src={getflag(user.nativeLanguage)}
         />
       </Box>
       <VStack
@@ -47,7 +64,7 @@ export default function PersonCard() {
             fontSize={['1.3rem', '1.7rem']}
             textAlign="left"
           >
-            John Doe
+            {user.username}
           </Heading>
           <Box
             position="absolute"
@@ -61,18 +78,18 @@ export default function PersonCard() {
             <Text
               fontSize={['0.7rem', '1rem']}
             >
-              Online
+              {user.onlineStatus ? 'online' : ''}
             </Text>
             <Circle
               size="17px"
-              background="green.200"
+              background={user.onlineStatus ? 'green.200' : 'tomato'}
             />
           </Box>
         </HStack>
         <Text
           fontSize={['0.8rem', '1rem']}
         >
-          Programming, excerise, language learning
+          {user.bio}
         </Text>
         <HStack>
           <Text
@@ -80,15 +97,19 @@ export default function PersonCard() {
           >
             Learning:
           </Text>
-          <Image src={IMAGES.flags.japan} w={['15px', '20px']} />
-          <Image src={IMAGES.flags.china} w={['15px', '20px']} />
+          {user.learningLanguages.map((lang) => (<Image src={getflag(lang)} w={['15px', '20px']} />))}
         </HStack>
       </VStack>
-      <ArrowRightIcon
+      <Button
         position="absolute"
         bottom="10px"
         right="10px"
-      />
+        cursor="pointer"
+        leftIcon={<ChatIcon />}
+        onClick={() => handleClick()}
+      >
+        Chat
+      </Button>
     </GridItem>
   );
 }

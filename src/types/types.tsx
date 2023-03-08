@@ -1,3 +1,5 @@
+import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
+
 export type Views = 'chat' | 'discover' | 'settings';
 
 // Auth
@@ -18,7 +20,7 @@ export type LoginForm = {
   password: string
 };
 
-type LanguageChoices = 'japanese' | 'vietnamese' | 'french' | 'chinese' | 'english';
+export type LanguageChoices = 'japanese' | 'vietnamese' | 'french' | 'chinese' | 'english';
 
 export interface SignUpForm {
   username: string,
@@ -28,3 +30,30 @@ export interface SignUpForm {
   languages: LanguageChoices[],
   nativeLanguage: LanguageChoices
 }
+
+export interface User {
+  username: string,
+  userId: string,
+  nativeLanguage: LanguageChoices,
+  learningLanguages: LanguageChoices[],
+  onlineStatus: boolean,
+  userImg: string,
+  bio: string,
+  lastLogin: number
+}
+
+export type Conversation = {
+  userId: string,
+  lastMessageSent: string,
+  conversationId: ConversationId,
+};
+
+export type ConversationId = string;
+
+export type Message = {
+  content: string,
+  userId: string,
+  timestamp: string | number,
+};
+
+export type SetActiveView = (arg0: Views) => JSX.Element;

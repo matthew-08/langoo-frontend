@@ -1,14 +1,17 @@
-import React from 'react';
 import {
-  Flex, Heading, Tabs, TabList, Tab, VStack, Image, SimpleGrid,
+  Flex, Heading, Tabs, TabList, Tab, VStack, Image, SimpleGrid, TabPanels, TabPanel,
 } from '@chakra-ui/react';
 import IMAGES from '../../../../images';
 import PersonCard from './components/PersonCard';
+import { useAppSelector } from '../../../../hooks';
+import { SetActiveView } from '../../../../types/types';
 
-export default function Discover() {
+export default function Discover({ setActiveView }: { setActiveView: SetActiveView }) {
+  const loading = useAppSelector((state) => state.usersSlice.loading);
+  const usersList = useAppSelector((state) => state.usersSlice.allUsers);
   return (
     <Flex
-      as="section"
+      as={Tabs}
       padding={{ base: '0.5rem', md: '2 rem' }}
       minW="100%"
       flexDir="column"
@@ -21,9 +24,7 @@ export default function Discover() {
         >
           Find Partners
         </Heading>
-        <Flex
-          as={Tabs}
-        >
+        <Flex>
           <TabList
             as={Flex}
             flexWrap="wrap"
@@ -84,16 +85,32 @@ export default function Discover() {
           </TabList>
         </Flex>
       </VStack>
-      <SimpleGrid
-        as="section"
-        minChildWidth={{ base: '300px', md: '440px' }}
-        gap="1rem"
-        overflow="auto"
-      >
-        <PersonCard />
-        <PersonCard />
-        <PersonCard />
-      </SimpleGrid>
+      {
+        loading ? <div>Loading...</div>
+          : (
+            <TabPanels>
+              <SimpleGrid
+                as={TabPanel}
+                minChildWidth={{ base: '300px', md: '440px' }}
+                gap="1rem"
+                overflow="auto"
+              >
+                {usersList.map((user) => (
+                  <PersonCard
+                    setActiveView={setActiveView}
+                    user={user}
+                  />
+                ))}
+              </SimpleGrid>
+              <SimpleGrid
+                as={TabPanel}
+                minChildWidth={{ base: '300px', md: '440px' }}
+                gap="1rem"
+                overflow="auto"
+              />
+            </TabPanels>
+          )
+      }
     </Flex>
   );
 }

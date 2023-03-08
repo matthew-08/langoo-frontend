@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   VStack, Flex, Text, HStack, Circle,
   useMediaQuery,
   Heading,
 } from '@chakra-ui/react';
-import Conversation from '../../components/Conversation';
 import CurrentConversation from '../../components/CurrentConversation';
+import { useAppDispatch, useAppSelector } from '../../../../hooks';
+import { fetchConversations } from '../../../../features/convoSlice';
+import UserConversation from '../../components/UserConversation';
+import { isSmallerThan700, MobileViewOptions } from '../../../../features/viewSlice';
 
 type Message = {
   user: string,
@@ -13,33 +16,39 @@ type Message = {
   msgContent: string,
 };
 
-type MobileViewOptions = 'allConversations' | 'userConversation';
-
 export default function Chat() {
-  const [currentUserConversation, setCurrentUserConversation] = useState<Message[]>(
-    [{ user: 'person', msgContent: 'hello', msgId: '123' }],
-  );
-  const [isSmallerThan700] = useMediaQuery('(max-width: 700px)');
-  const [userMobileView, setUserMobileView] = useState<MobileViewOptions>('allConversations');
+  const conversationList = useAppSelector((state) => state.convoSlice.conversations);
+  const convoListLoading = useAppSelector((state) => state.convoSlice.loading);
+  const haveFetchedConvos = useAppSelector((state) => state.convoSlice.fetched);
+  const currentConversation = useAppSelector((state) => state.convoSlice.activeConvo);
+  const dispatch = useAppDispatch();
 
-  const getViewStatus = (component: 'allConversations' | 'userConversation') => {
-    if (userMobileView === component) {
-      console.log(userMobileView);
-      return 'flex';
+  const [checkIsSmallerThan700] = useMediaQuery('(max-width: 700px)');
+
+  const convoView = useAppSelector((state) => state.viewSlice.componentViews.allConversations);
+  useEffect(() => {
+    dispatch(isSmallerThan700(checkIsSmallerThan700));
+  }, [checkIsSmallerThan700]);
+
+  useEffect(() => {
+    if (!haveFetchedConvos) {
+      dispatch(fetchConversations());
     }
+  }, []);
 
-    return 'none';
-  };
+  let conversations;
 
-  const chooseConversation = () => {
-    console.log('check');
-    if (isSmallerThan700) {
-      setCurrentUserConversation([{ user: 'person', msgContent: 'hello', msgId: '123' }]);
-      setUserMobileView((prev) => 'userConversation');
-    } else {
-      setCurrentUserConversation([{ user: 'person', msgContent: 'hello', msgId: '123' }]);
-    }
-  };
+  if (convoListLoading) {
+    conversations = <div>Loading</div>;
+  } else if (conversationList.length === 0) {
+    conversations = <div>You dont have any conversations yet.</div>;
+  } else {
+    conversations = conversationList.map((convo) => (
+      <UserConversation
+        convo={convo}
+      />
+    ));
+  }
 
   return (
     <Flex
@@ -49,13 +58,13 @@ export default function Chat() {
     >
       <VStack
        // Conversations side-panel
-        width={isSmallerThan700 ? '100%' : '30%'}
+        width={checkIsSmallerThan700 ? '100%' : '30%'}
         height="100%"
         as="aside"
         borderColor="gray.500"
         borderRight="2px solid"
         padding="1rem"
-        display={isSmallerThan700 ? getViewStatus('allConversations') : 'flex'}
+        display={checkIsSmallerThan700 ? convoView : 'flex'}
       >
         <HStack
           mr="auto"
@@ -73,15 +82,15 @@ export default function Chat() {
             <Text>12</Text>
           </Circle>
         </HStack>
-        <Conversation
-          chooseConversation={chooseConversation}
-        />
+        { conversations }
       </VStack>
-      <CurrentConversation
-        display={isSmallerThan700 ? getViewStatus('userConversation') : 'flex'}
-        mobileView={!!isSmallerThan700}
-        changeView={() => 'ok'}
-      />
+      {
+        currentConversation
+          ? (
+            <CurrentConversation />
+          )
+          : ''
+}
     </Flex>
   );
 }

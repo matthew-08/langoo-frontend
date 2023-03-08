@@ -1,26 +1,41 @@
 import { Flex } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Sidebar from './components/Sidebar';
 import { Views } from '../../types/types';
 import Chat from './views/chat/Chat';
 import Discover from './views/discover/Discover';
 import Settings from './views/settings/Settings';
+import { useAppDispatch } from '../../hooks';
+import { fetchUsers } from '../../features/usersSlice';
+import useSocketSetup from '../../socketSetup';
+import socket from '../../socket';
+import { onMessage } from '../../features/messagesSlice';
 
 export default function Dashboard() {
   const [activeView, setActiveView] = useState<Views>('chat');
+  useSocketSetup();
+  const dispatch = useAppDispatch();
 
   const currentActiveView = () => {
     switch (activeView) {
       case 'chat':
         return <Chat />;
       case 'discover':
-        return <Discover />;
+        return (
+          <Discover
+            setActiveView={setActiveView}
+          />
+        );
       case 'settings':
         return <Settings />;
       default:
         return <Chat />;
     }
   };
+
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, []);
 
   const switchView = (view: Views) => setActiveView(view);
 
