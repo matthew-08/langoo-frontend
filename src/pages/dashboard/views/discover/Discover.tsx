@@ -1,10 +1,13 @@
 import {
   Flex, Heading, Tabs, TabList, Tab, VStack, Image, SimpleGrid, TabPanels, TabPanel,
 } from '@chakra-ui/react';
-import IMAGES from '../../../../images';
+import IMAGES from '../../../../utils/images';
 import PersonCard from './components/PersonCard';
-import { useAppSelector } from '../../../../hooks';
-import { SetActiveView } from '../../../../types/types';
+import { useAppSelector } from '../../../../utils/hooks';
+import { LanguageChoices, SetActiveView } from '../../../../types/types';
+import DiscoverGrid from './components/DiscoverGrid';
+
+const languages = ['all', 'japanese', 'french', 'english', 'chinese', 'vietnamese'] as const;
 
 export default function Discover({ setActiveView }: { setActiveView: SetActiveView }) {
   const loading = useAppSelector((state) => state.usersSlice.loading);
@@ -89,26 +92,12 @@ export default function Discover({ setActiveView }: { setActiveView: SetActiveVi
         loading ? <div>Loading...</div>
           : (
             <TabPanels>
-              <SimpleGrid
-                as={TabPanel}
-                minChildWidth={{ base: '270px', md: '440px' }}
-                gap="1rem"
-                overflow="auto"
-                padding="0"
-              >
-                {usersList.map((user) => (
-                  <PersonCard
-                    setActiveView={setActiveView}
-                    user={user}
-                  />
-                ))}
-              </SimpleGrid>
-              <SimpleGrid
-                as={TabPanel}
-                minChildWidth={{ base: '300px', md: '440px' }}
-                gap="1rem"
-                overflow="auto"
-              />
+              {languages.map((lang) => (
+                <DiscoverGrid
+                  language={lang}
+                  setActiveView={setActiveView}
+                />
+              ))}
             </TabPanels>
           )
       }

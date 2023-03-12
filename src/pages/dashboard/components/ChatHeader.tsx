@@ -1,14 +1,19 @@
 import {
   Flex, HStack, IconButton, Image, Text, useDisclosure, VStack,
-  Modal, ModalOverlay, ModalContent, ModalFooter, ModalHeader, ModalCloseButton, ModalBody, ButtonGroup, Button,
+  Modal, ModalOverlay,
+  ModalContent, ModalFooter,
+  ModalHeader, ModalCloseButton,
+  ModalBody, ButtonGroup, Button,
 } from '@chakra-ui/react';
 import { ArrowBackIcon, WarningIcon } from '@chakra-ui/icons';
 import timeago from 'epoch-timeago';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../utils/hooks';
 import { viewStatusSet } from '../../../features/viewSlice';
 import cat from '../../../assets/cat.jpg';
-import IMAGES from '../../../images';
+import IMAGES from '../../../utils/images';
 import getflag from '../../../utils/getFlag';
+import getUserImage from '../../../utils/getUserImg';
+import { User } from '../../../types/types';
 
 export default function ChatHeader() {
   const dispatch = useAppDispatch();
@@ -19,7 +24,7 @@ export default function ChatHeader() {
   };
   const userDetails = useAppSelector(
     (state) => state.usersSlice.allUsers.find((user) => user.userId === convoUser),
-  );
+  ) as User;
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   return (
@@ -28,8 +33,8 @@ export default function ChatHeader() {
       maxH="15%"
       minH="15%"
       minW="100%"
-      borderColor="gray.100"
-      borderBottom="2px"
+      borderBottom="3px solid"
+      borderBottomColor="#2d3055"
       align="center"
     >
       {isMobileView && (
@@ -47,7 +52,7 @@ export default function ChatHeader() {
       )}
       <HStack>
         <Image
-          src={cat}
+          src={getUserImage(userDetails?.userImg)}
           boxSize="80px"
           borderRadius="full"
           border="4px"
@@ -70,7 +75,10 @@ export default function ChatHeader() {
             mr="auto"
           >
             {userDetails?.onlineStatus ? 'Online now'
-              : `Last online: ${timeago(userDetails.lastLogin)}`}
+              : `Last online: ${userDetails
+                ? timeago(userDetails.lastLogin)
+                : 'loading...'
+              }`}
           </Text>
         </VStack>
       </HStack>
@@ -88,8 +96,7 @@ export default function ChatHeader() {
               filter="invert(99%) sepia(16%) saturate(218%) hue-rotate(232deg) brightness(113%) contrast(100%);"
               color="white"
               src={IMAGES.account}
-            />
-)}
+            />)}
         />
         <IconButton
           background="none"

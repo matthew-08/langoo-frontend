@@ -4,7 +4,11 @@ import {
 } from '@reduxjs/toolkit';
 // eslint-disable-next-line import/no-cycle
 import { RootState } from '../store';
-import { User, Conversation, ConversationId } from '../types/types';
+import {
+  User, Conversation, ConversationId, Message,
+  InitialConversationFetch,
+  MessagePayload,
+} from '../types/types';
 
 type ConvoState = {
   conversations: Conversation[],
@@ -21,7 +25,7 @@ const initialState = {
 } as ConvoState;
 
 export const fetchConversations = createAsyncThunk<
-Conversation[],
+InitialConversationFetch[],
 void,
 {
   state: RootState
@@ -30,6 +34,7 @@ void,
   'users/fetchConvos',
   async (_, { getState }) => {
     const { userId } = getState().authReducer.user;
+    console.log(userId);
     const userConvos = await fetch(`http://localhost:3000/userInfo/allConvos/${userId}`);
     return userConvos.json();
   },
@@ -62,6 +67,16 @@ const convoSlice = createSlice({
         state.activeConvo = findConvo;
       }
     },
+    updateLatestMessage(state, action:PayloadAction<MessagePayload>) {
+      const { message, conversationId } = action.payload;
+      const findConvo = state.conversations
+        .find((convo) => convo.conversationId === conversationId);
+      if (findConvo) {
+        findConvo.latestMessage = message;
+        state.conversations
+          .sort((a, b) => Number(b.latestMessage.timestamp) - Number(a.latestMessage.timestamp));
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchConversations.pending, (state) => {
@@ -71,6 +86,8 @@ const convoSlice = createSlice({
     builder.addCase(fetchConversations.fulfilled, (state, action) => {
       state.loading = false;
       state.conversations = action.payload;
+      state.conversations
+        .sort((a, b) => Number(a.latestMessage.timestamp) - Number(b.latestMessage.timestamp));
     });
     builder.addCase(addConvo.fulfilled, (state, action) => {
       state.conversations.push(action.payload);
@@ -79,5 +96,5 @@ const convoSlice = createSlice({
   },
 });
 
-export const { setActiveConvo } = convoSlice.actions;
+export const { setActiveConvo, updateLatestMessage } = convoSlice.actions;
 export default convoSlice.reducer;

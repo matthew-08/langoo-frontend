@@ -2,13 +2,13 @@ import React from 'react';
 import {
   GridItem, Box, Image, VStack, HStack, Heading, Text, Circle, Flex, Button,
 } from '@chakra-ui/react';
-import { ArrowRightIcon, ChatIcon } from '@chakra-ui/icons';
-import IMAGES from '../../../../../images';
-import { LanguageChoices, User, SetActiveView } from '../../../../../types/types';
-import { useAppDispatch, useAppSelector } from '../../../../../hooks';
+import { ChatIcon } from '@chakra-ui/icons';
+import { User, SetActiveView } from '../../../../../types/types';
+import { useAppDispatch, useAppSelector } from '../../../../../utils/hooks';
 import { addConvo, setActiveConvo } from '../../../../../features/convoSlice';
 import getflag from '../../../../../utils/getFlag';
 import { viewStatusSet } from '../../../../../features/viewSlice';
+import getUserImage from '../../../../../utils/getUserImg';
 
 export default function PersonCard({ user, setActiveView }:
 { user: User, setActiveView: SetActiveView }) {
@@ -29,6 +29,7 @@ export default function PersonCard({ user, setActiveView }:
         .then(() => setActiveView('chat'));
     }
   };
+  console.log(user.learningLanguages);
   return (
     <GridItem
       borderRadius="10px"
@@ -47,7 +48,7 @@ export default function PersonCard({ user, setActiveView }:
         position="relative"
       >
         <Image
-          src={user.userImg || ''}
+          src={getUserImage(user.userImg)}
           boxSize={['80px', '100px']}
           borderRadius="full"
         />
@@ -85,7 +86,7 @@ export default function PersonCard({ user, setActiveView }:
             <Text
               fontSize={['0.7rem', '1rem']}
             >
-              {user.onlineStatus ? 'online' : ''}
+              {user.onlineStatus ? 'Online' : ''}
             </Text>
             <Circle
               size="17px"

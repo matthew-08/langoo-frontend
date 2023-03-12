@@ -1,20 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   VStack, Flex, Text, HStack, Circle,
   useMediaQuery,
   Heading,
+  Input,
+  InputGroup,
+  InputLeftElement,
 } from '@chakra-ui/react';
+import { Search2Icon } from '@chakra-ui/icons';
 import CurrentConversation from '../../components/CurrentConversation';
-import { useAppDispatch, useAppSelector } from '../../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../../utils/hooks';
 import { fetchConversations } from '../../../../features/convoSlice';
 import UserConversation from '../../components/UserConversation';
-import { isSmallerThan700, MobileViewOptions } from '../../../../features/viewSlice';
-
-type Message = {
-  user: string,
-  msgId: string,
-  msgContent: string,
-};
+import { isSmallerThan700 } from '../../../../features/viewSlice';
 
 export default function Chat() {
   const conversationList = useAppSelector((state) => state.convoSlice.conversations);
@@ -27,6 +25,7 @@ export default function Chat() {
 
   const convoView = useAppSelector((state) => state.viewSlice.componentViews.allConversations);
   useEffect(() => {
+    console.log(checkIsSmallerThan700);
     dispatch(isSmallerThan700(checkIsSmallerThan700));
   }, [checkIsSmallerThan700]);
 
@@ -61,8 +60,8 @@ export default function Chat() {
         width={checkIsSmallerThan700 ? '100%' : '30%'}
         height="100%"
         as="aside"
-        borderColor="gray.500"
-        borderRight="2px solid"
+        borderRight="3px solid"
+        borderRightColor="#2d3055"
         padding="1rem"
         display={checkIsSmallerThan700 ? convoView : 'flex'}
       >
@@ -82,6 +81,18 @@ export default function Chat() {
             <Text>12</Text>
           </Circle>
         </HStack>
+        <InputGroup>
+          <InputLeftElement
+            pointerEvents="none"
+            // eslint-disable-next-line react/no-children-prop
+            children={<Search2Icon />}
+          />
+          <Input
+            type="text"
+            placeholder="Search conversations..."
+          />
+
+        </InputGroup>
         { conversations }
       </VStack>
       {
@@ -89,7 +100,27 @@ export default function Chat() {
           ? (
             <CurrentConversation />
           )
-          : ''
+          : (
+            <Flex
+              w="70%"
+              maxW="70%"
+              justify="center"
+              display={checkIsSmallerThan700 ? 'none' : 'flex'}
+              flexDir="column"
+            >
+              <Heading
+                mx="auto"
+                textAlign="center"
+              >
+                Welcome to Langoop!
+              </Heading>
+              <Text>
+                Click an existing conversation or the discover section to
+                start chatting now!
+
+              </Text>
+            </Flex>
+          )
 }
     </Flex>
   );

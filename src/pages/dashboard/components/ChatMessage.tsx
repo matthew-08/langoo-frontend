@@ -1,13 +1,36 @@
 import React from 'react';
-import { Text, Flex, Image } from '@chakra-ui/react';
-import { useAppSelector } from '../../../hooks';
+import {
+  Text, Flex, Image, Box, Container,
+} from '@chakra-ui/react';
+import timeago from 'epoch-timeago';
+import { useAppSelector } from '../../../utils/hooks';
 import { Message } from '../../../types/types';
-import IMAGES from '../../../images';
+import IMAGES from '../../../utils/images';
+import getUserImage from '../../../utils/getUserImg';
 
 export default function ChatMessage({ message }:{ message: Message }) {
-  const currentUser = useAppSelector((state) => state.authReducer.user.userId);
-  const isCurrentUser = currentUser === message.userId;
+  const currentUser = useAppSelector((state) => state.authReducer.user);
+  const isCurrentUser = currentUser.userId === message.userId;
+
+  let userImg;
+  if (isCurrentUser) {
+    userImg = getUserImage(currentUser.userImg);
+  } else {
+    const fetchOtherUser = useAppSelector((state) => state
+      .usersSlice
+      .allUsers
+      .find((user) => user.userId === message.userId));
+    userImg = getUserImage(fetchOtherUser?.userImg);
+  }
   let chatMessage;
+
+  let timestamp;
+  const currentTime = Math.floor(Date.now() / 1000);
+  if (currentTime - Number(message.timestamp) > 1800) {
+    timestamp = timeago(message.timestamp);
+  } else {
+    timestamp = false;
+  }
 
   if (isCurrentUser) {
     chatMessage = (
@@ -31,7 +54,7 @@ export default function ChatMessage({ message }:{ message: Message }) {
           mt="auto"
           boxSize="40px"
           borderRadius="full"
-          src={IMAGES.guy}
+          src={userImg}
           ml="0.5rem"
         />
       </Flex>
@@ -49,7 +72,7 @@ export default function ChatMessage({ message }:{ message: Message }) {
           boxSize="40px"
           borderRadius="full"
           mr="0.5rem"
-          src={IMAGES.guy}
+          src={userImg}
         />
         <Flex
           width="100%"

@@ -1,17 +1,13 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable no-param-reassign */
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { convertTypeAcquisitionFromJson } from 'typescript';
 import { RootState } from '../store';
-import { Conversation, Message } from '../types/types';
+import {
+  Conversation, Message, InitialConversationFetch, MessagePayload,
+} from '../types/types';
 import { addConvo, fetchConversations } from './convoSlice';
 
 type ConversationId = string;
-
-type MessagePayload = {
-  conversationId: ConversationId,
-  message:Message
-};
 
 type ConversationMessages = {
   [key: ConversationId]: {
@@ -41,7 +37,7 @@ ConversationId,
   state: RootState
 }
 >(
-  'meesages/fetch',
+  'messages/fetch',
   async (convoId) => {
     const messages = await fetch(`http://localhost:3000/convo/getAllMessages/${convoId}`);
     const payload = {
@@ -80,13 +76,16 @@ const messagesSlice = createSlice({
         messages,
       };
     });
-    builder.addCase(fetchConversations.fulfilled, (state, action:PayloadAction<Conversation[]>) => {
-      action.payload.forEach((convo) => {
-        state.conversationMessages[convo.conversationId] = {
-          messages: [],
-        };
-      });
-    });
+    builder.addCase(
+      fetchConversations.fulfilled,
+      (state, action:PayloadAction<InitialConversationFetch[]>) => {
+        action.payload.forEach((convo) => {
+          state.conversationMessages[convo.conversationId] = {
+            messages: convo.latestMessage ? [convo.latestMessage] : [],
+          };
+        });
+      },
+    );
     builder.addCase(addConvo.fulfilled, (state, action:PayloadAction<Conversation>) => {
       state.conversationMessages[action.payload.conversationId] = {
         messages: [],

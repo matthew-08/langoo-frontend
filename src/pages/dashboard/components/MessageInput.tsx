@@ -6,7 +6,8 @@ import { AttachmentIcon, ChatIcon } from '@chakra-ui/icons';
 import { Conversation } from '../../../types/types';
 import socket from '../../../socket';
 import { onMessage } from '../../../features/messagesSlice';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../utils/hooks';
+import { updateLatestMessage } from '../../../features/convoSlice';
 
 function MessageInput({ convo }:{ convo:Conversation | undefined }) {
   const dispatch = useAppDispatch();
@@ -16,19 +17,19 @@ function MessageInput({ convo }:{ convo:Conversation | undefined }) {
     e.preventDefault();
     if (convo) {
       const date = new Date().getTime();
-      console.log('sending emit _private_chat');
+      const message = {
+        timestamp: date,
+        content: input,
+        userId: currentUser,
+        conversationId: convo.conversationId,
+      };
       await fetch('http://localhost:3000/convo/sendMessage', {
         method: 'POST',
         credentials: 'include',
         headers: {
-          'Content-Type': 'applicationsjson',
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          timestamp: date,
-          content: input,
-          userId: currentUser,
-          conversationId: convo.conversationId,
-        }),
+        body: JSON.stringify(message),
       });
       socket.emit('private_chat', {
         message: {
@@ -39,8 +40,15 @@ function MessageInput({ convo }:{ convo:Conversation | undefined }) {
         conversationId: convo.conversationId,
         to: convo.userId,
       });
-      console.log('sending');
       dispatch(onMessage({
+        conversationId: convo.conversationId,
+        message: {
+          content: input,
+          timestamp: date,
+          userId: currentUser as string,
+        },
+      }));
+      dispatch(updateLatestMessage({
         conversationId: convo.conversationId,
         message: {
           content: input,
@@ -50,7 +58,6 @@ function MessageInput({ convo }:{ convo:Conversation | undefined }) {
       }));
     }
   };
-  console.log(convo);
   return (
     <HStack
       width="100%"

@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import {
-  Flex, Box, IconButton,
+  Flex, Box,
+  Toast,
 } from '@chakra-ui/react';
-import { ArrowBackIcon } from '@chakra-ui/icons';
 import MessageInput from './MessageInput';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../utils/hooks';
 import { fetchMessages, onMessage } from '../../../features/messagesSlice';
 import ChatMessage from './ChatMessage';
 import { Conversation } from '../../../types/types';
@@ -38,7 +38,6 @@ export default function CurrentConversation() {
     if (convoMessages.length === 0) {
       dispatch(fetchMessages(currentConvo.conversationId));
     }
-    console.log('render of chat_message');
   }, []);
 
   return (
@@ -58,6 +57,18 @@ export default function CurrentConversation() {
         padding="1rem"
         maxH="100%"
         overflow="auto"
+        css={{
+          '&::-webkit-scrollbar': {
+            width: '6px',
+          },
+          '&::-webkit-scrollbar-track': {
+            width: '6px',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            background: '#2d3055',
+            borderRadius: '24px',
+          },
+        }}
       >
         <Box>
           {convoMessages

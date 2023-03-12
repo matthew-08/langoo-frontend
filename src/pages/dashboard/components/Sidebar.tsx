@@ -1,20 +1,35 @@
-import React from 'react';
 import {
   Flex, VStack, IconButton, Image, ButtonGroup,
-  defineStyleConfig,
+  useDisclosure,
+  Modal,
+  ModalHeader,
+  ModalCloseButton,
+  ModalOverlay,
+  Text,
+  ModalContent,
+  ModalBody,
+  ModalFooter,
+  Button,
 } from '@chakra-ui/react';
-import chat from '../../../assets/chat.png';
-import discover from '../../../assets/discover.png';
-import settings from '../../../assets/settings.png';
-import guy from '../../../assets/person.webp';
+import { useAppSelector } from '../../../utils/hooks';
+import getUserImage from '../../../utils/getUserImg';
+import IMAGES from '../../../utils/images';
+import whiteFilter from '../../../utils/whiteFilter';
+import SidebarButton from './SidebarButton';
 
 interface Props {
   switchView: (view: 'chat' | 'discover' | 'settings') => void
+  activeView: 'chat' | 'discover' | 'settings'
 }
 
-const whiteFilter = 'invert(100%) sepia(4%) saturate(7449%) hue-rotate(244deg) brightness(109%) contrast(94%)';
+const viewOptions = ['discover', 'chat', 'settings'] as const;
 
-export default function Sidebar({ switchView }: Props) {
+export default function Sidebar({
+  switchView,
+  activeView,
+}: Props) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const user = useAppSelector((state) => state.authReducer.user);
   return (
     <Flex
       minW={{ base: '16%', md: '7%' }}
@@ -25,72 +40,94 @@ export default function Sidebar({ switchView }: Props) {
       justify="center"
       flexDir="column"
       backgroundColor="#2d3055"
+      borderTopLeftRadius="10px"
+      borderBottomLeftRadius="10px"
     >
       <Image
-        src={guy}
+        src={getUserImage(user.userImg)}
         boxSize={{ base: '55px', md: '80px' }}
         mb="auto"
         mt="1rem"
+        padding="0.2rem"
         borderRadius="full"
-        border={{ base: '2px', md: '4px' }}
-        borderColor="blue.400"
+        border="2px"
       />
       <VStack
-        gap="2rem"
+        gap="1.5rem"
         mb="auto"
         as={ButtonGroup}
         variant="outline"
         colorScheme="facebook"
         alignItems="center"
       >
-        <IconButton
-          aria-label="discover-cion"
-          px={{ base: '0.6rem', md: '1rem' }}
-          py={{ base: '1rem', md: '2rem' }}
-          _focus={{
-            borderColor: '#4299e1',
-          }}
-          icon={(
-            <Image
-              src={discover}
-              width={{ base: '30px', md: '50px' }}
-            />
-)}
-          onClick={() => switchView('discover')}
-        />
-        <IconButton
-          aria-label="chat-icon"
-          px={{ base: '0.6rem', md: '1rem' }}
-          py={{ base: '1rem', md: '2rem' }}
-          _focus={{
-            borderColor: '#4299e1',
-          }}
-          icon={(
-            <Image
-              src={chat}
-              filter={whiteFilter}
-              width={{ base: '30px', md: '50px' }}
-            />
-)}
-          onClick={() => switchView('chat')}
-        />
+        {viewOptions.map((view) => (
+          <SidebarButton
+            activeView={activeView}
+            buttonType={view}
+            switchView={switchView}
+          />
+        ))}
         <IconButton
           px={{ base: '0.6rem', md: '1rem' }}
           py={{ base: '1rem', md: '2rem' }}
           aria-label="settings-icon"
+          border="none"
           _focus={{
             borderColor: '#4299e1',
           }}
           icon={(
             <Image
               filter={whiteFilter}
-              src={settings}
-              width={{ base: '30px', md: '50px' }}
+              src={IMAGES.logout}
+              width="40px"
             />
 )}
-          onClick={() => switchView('settings')}
+          onClick={onOpen}
         />
       </VStack>
+      <IconButton
+        aria-label="github"
+        href="http://github.com/matthew-08"
+        as="a"
+        mb="0.5rem"
+        icon={(
+          <Image
+            w="30px"
+            src={IMAGES.github}
+          />
+)}
+      />
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            Logout
+          </ModalHeader>
+          <ModalBody>
+            <Text
+              m="auto"
+            >
+              Continue logging out?
+            </Text>
+          </ModalBody>
+          <ModalCloseButton />
+          <ModalFooter>
+            <ButtonGroup>
+              <Button
+                onClick={onClose}
+              >
+                Cancel
+              </Button>
+              <Button>
+                Log out
+              </Button>
+            </ButtonGroup>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Flex>
   );
 }
