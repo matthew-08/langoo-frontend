@@ -7,7 +7,9 @@ const getUserImage = (img: 'default' | string | null | undefined) => {
     if (!img) {
         return IMAGES.defaultImg
     }
-    console.log(img)
+    if(img === undefined) {
+        return IMAGES.defaultImg
+    }
     return img
 }
 

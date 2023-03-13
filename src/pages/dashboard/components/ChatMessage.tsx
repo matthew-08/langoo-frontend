@@ -29,9 +29,13 @@ export default function ChatMessage({ message }: { message: Message }) {
     const [isEditing, setIsEditing] = useState(false)
     const [editMessage, setEditMessage] = useState('')
     const messageRef = useRef(null)
+
     const conversationId = useAppSelector(
         (state) => state.convoSlice.activeConvo?.conversationId
     ) as ConversationId
+    const userTo = useAppSelector(
+        (state) => state.convoSlice.activeConvo?.userId
+    )
 
     let userImg
     if (isCurrentUser) {
@@ -71,6 +75,7 @@ export default function ChatMessage({ message }: { message: Message }) {
         const updatedData = {
             conversationId,
             message: updatedMessage,
+            to: userTo,
         }
         dispatch(onMessageEdit(updatedData))
         socket.emit('edit_message', updatedData)

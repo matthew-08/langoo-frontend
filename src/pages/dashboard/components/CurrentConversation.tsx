@@ -37,12 +37,11 @@ export default function CurrentConversation() {
         socket.on('chat_message', (data) => {
             dispatch(onMessage(data))
         })
-        socket.on('edit_message', (data) => {
-            dispatch(onMessageEdit(data))
+        socket.on('on_edit', () => {
+            console.log('test')
         })
         return () => {
             socket.off('chat_message')
-            socket.off('edit_message')
         }
     }, [])
 

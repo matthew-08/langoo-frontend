@@ -66,6 +66,7 @@ function MessageInput({ convo }: { convo: Conversation | undefined }) {
                 })
             )
         }
+        setInput('')
     }
     return (
         <HStack width="100%" pl="1rem" pr="1rem" mt="auto" pb="1rem">

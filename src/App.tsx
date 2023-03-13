@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import AppRoutes from './routes/AppRoutes'
 import { useAppDispatch, useAppSelector } from './utils/hooks'
 import { checkForSession } from './features/authSlice'
+import { onMessageEdit } from './features/messagesSlice'
+import socket from './socket'
 
 function App() {
     const navigate = useNavigate()
@@ -18,6 +20,12 @@ function App() {
     useEffect(() => {
         if (isLoggedIn) {
             navigate('/chat')
+        }
+        socket.on('on_edit', (data) => {
+            dispatch(onMessageEdit(data))
+        })
+        return () => {
+            socket.off('on_edit')
         }
     }, [isLoggedIn])
     return (
