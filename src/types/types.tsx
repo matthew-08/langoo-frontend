@@ -53,6 +53,7 @@ export type Conversation = {
     userId: string
     latestMessage: Message
     conversationId: ConversationId
+    fetched: boolean
 }
 
 export type ConversationId = string

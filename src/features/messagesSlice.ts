@@ -39,7 +39,7 @@ export const fetchMessages = createAsyncThunk<
     {
         state: RootState
     }
->('messages/fetch', async (convoId) => {
+>('messages/fetchMessages', async (convoId) => {
     const messages = await fetch(
         `http://localhost:3000/convo/getAllMessages/${convoId}`
     )

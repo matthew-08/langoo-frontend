@@ -11,6 +11,7 @@ import ChatMessage from './ChatMessage'
 import { Conversation } from '../../../types/types'
 import socket from '../../../socket'
 import ChatHeader from './ChatHeader'
+import { conversationFetched } from '../../../features/convoSlice'
 
 export default function CurrentConversation() {
     const dispatch = useAppDispatch()
@@ -46,8 +47,9 @@ export default function CurrentConversation() {
     }, [])
 
     useEffect(() => {
-        if (convoMessages.length === 0) {
+        if (!currentConvo.fetched) {
             dispatch(fetchMessages(currentConvo.conversationId))
+            dispatch(conversationFetched(currentConvo.conversationId))
         }
     }, [])
 

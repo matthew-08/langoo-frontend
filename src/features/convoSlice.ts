@@ -77,6 +77,14 @@ const convoSlice = createSlice({
           .sort((a, b) => Number(b.latestMessage.timestamp) - Number(a.latestMessage.timestamp));
       }
     },
+    conversationFetched(state, action:PayloadAction<ConversationId>) {
+      const conversationId = action.payload
+      const findConvo = state.conversations
+      .find((convo) => convo.conversationId === conversationId);
+      if(findConvo) {
+        findConvo.fetched = true
+      }
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchConversations.pending, (state) => {
@@ -86,6 +94,7 @@ const convoSlice = createSlice({
     builder.addCase(fetchConversations.fulfilled, (state, action) => {
       state.loading = false;
       state.conversations = action.payload;
+      state.conversations.map(convo => convo.fetched = false)
       state.conversations
         .sort((a, b) => Number(a.latestMessage.timestamp) - Number(b.latestMessage.timestamp));
     });
@@ -96,5 +105,5 @@ const convoSlice = createSlice({
   },
 });
 
-export const { setActiveConvo, updateLatestMessage } = convoSlice.actions;
+export const { setActiveConvo, updateLatestMessage, conversationFetched } = convoSlice.actions;
 export default convoSlice.reducer;

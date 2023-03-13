@@ -62,7 +62,7 @@ export default function ChatMessage({ message }: { message: Message }) {
         setOpen(false)
     }
 
-    const handleSumbit = (e: React.MouseEvent) => {
+    const handleSumbit = async (e: React.MouseEvent) => {
         e.preventDefault()
         if (editMessage === '' || editMessage === message.content) {
             return setIsEditing(false)
@@ -78,6 +78,14 @@ export default function ChatMessage({ message }: { message: Message }) {
             to: userTo,
         }
         dispatch(onMessageEdit(updatedData))
+        await fetch('http://localhost:3000/convo/updateMessage', {
+            method: 'PUT',
+            credentials: 'include',
+            body: JSON.stringify(updatedMessage),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
         socket.emit('edit_message', updatedData)
         return setIsEditing(false)
     }
@@ -106,9 +114,17 @@ export default function ChatMessage({ message }: { message: Message }) {
                             aria-label="edit-button"
                             onClick={() => setIsEditing(true)}
                             icon={<EditIcon />}
+                            backgroundColor="gray.700"
+                            _hover={{
+                                backgroundColor: 'gray.600',
+                            }}
                         />
                         <IconButton
-                            aria-label="delete-cion"
+                            backgroundColor="gray.700"
+                            aria-label="delete-icon"
+                            _hover={{
+                                backgroundColor: 'gray.600',
+                            }}
                             icon={<DeleteIcon color="red.200" />}
                         />
                     </ButtonGroup>
