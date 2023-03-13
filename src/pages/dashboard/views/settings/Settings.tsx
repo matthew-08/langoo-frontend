@@ -17,6 +17,10 @@ import {
     useDisclosure,
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
+import capitalize from '../../../../utils/capitalize'
+import getflag from '../../../../utils/getFlag'
+import { useAppSelector } from '../../../../utils/hooks'
 import IMAGES from '../../../../utils/images'
 import ChangePhotoModal from './components/ChangePhotoModal'
 import EditProfileModal from './components/EditProfileModal'
@@ -37,6 +41,8 @@ export default function Settings() {
         onClose: imgOnClose,
     } = useDisclosure()
 
+    const currentUser = useAppSelector((state) => state.authReducer.user)
+
     return (
         <Flex
             as="section"
@@ -55,7 +61,7 @@ export default function Settings() {
             >
                 <Box>
                     <Image
-                        src={IMAGES.guy}
+                        src={currentUser.userImg}
                         borderRadius="full"
                         border="4px"
                         borderColor="white"
@@ -67,10 +73,12 @@ export default function Settings() {
                     />
                 </Box>
                 <Flex flexDir="column" mb="1rem">
-                    <Heading>John Doe</Heading>
-                    <Text textAlign="center" fontSize="0.8rem" color="gray.400">
-                        Supercoolemail@gmail.com
-                    </Text>
+                    <Heading>{currentUser.username}</Heading>
+                    <Text
+                        textAlign="center"
+                        fontSize="0.8rem"
+                        color="gray.400"
+                    />
                 </Flex>
                 <Flex
                     width="100%"
@@ -84,15 +92,30 @@ export default function Settings() {
                             Studying:
                         </Heading>
                         <HStack>
-                            <Text as="span">Japanese</Text>
-                            <Image src={IMAGES.flags.japan} boxSize="20px" />
-                            <Text as="span">Chinese</Text>
-                            <Image src={IMAGES.flags.china} boxSize="20px" />
+                            {currentUser.learningLanguages.map((lang) => {
+                                return (
+                                    <Flex
+                                        align="center"
+                                        gap="0.2rem"
+                                        key={uuidv4()}
+                                    >
+                                        <Text as="span">
+                                            {capitalize(lang)}
+                                        </Text>
+                                        <Image
+                                            src={getflag(lang)}
+                                            boxSize="20px"
+                                        />
+                                    </Flex>
+                                )
+                            })}
                         </HStack>
                     </VStack>
                     <Heading fontSize="1.3rem">Bio:</Heading>
                     <Text maxW="40ch" textAlign="center" mb="0.5rem">
-                        Software developer, adventurer.
+                        {currentUser.bio
+                            ? currentUser.bio
+                            : "You don't have a bio yet"}
                     </Text>
                 </Flex>
                 <ButtonGroup>

@@ -23,10 +23,17 @@ import {
     FormControl,
     Flex,
     useMediaQuery,
+    EditableTextarea,
+    Input,
+    Textarea,
 } from '@chakra-ui/react'
 import { useForm } from 'react-hook-form'
-import { useAppSelector } from '../../../../../utils/hooks'
+import * as Yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useAppDispatch, useAppSelector } from '../../../../../utils/hooks'
 import IMAGES from '../../../../../utils/images'
+import { LanguageChoices } from '../../../../../types/types'
+import { checkForSession } from '../../../../../features/authSlice'
 
 interface Props {
     isOpen: boolean
@@ -35,34 +42,74 @@ interface Props {
 }
 
 interface Fields {
-    nativeLanguage: string
-    languages: string[]
+    nativeLanguage: LanguageChoices
+    languages: LanguageChoices[]
+    username: string
+    bio: string | null
 }
 
+const editProfileSchema = Yup.object().shape({
+    username: Yup.string()
+        .required('This field is required')
+        .min(6, 'Username must be at least 6 characters')
+        .max(20, 'Username must not exceed 20 characters'),
+    languages: Yup.array().min(1, 'You must choose at least one language'),
+})
+
 export default function EditProfileModal({ isOpen, onClose, onOpen }: Props) {
+    const dispatch = useAppDispatch()
     const [isBiggerThan700] = useMediaQuery('')
+    const currentUser = useAppSelector((state) => state.authReducer.user)
+    const submitChanges = async (data: Fields) => {
+        const dataToPut = {
+            updatedInfo: data,
+            userId: currentUser.userId,
+        }
+        await fetch('http://localhost:3000/userInfo/updateUser', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dataToPut),
+            credentials: 'include',
+        }).then((res) => {
+            dispatch(checkForSession())
+            return onClose()
+        })
+    }
     const {
         register,
+        setError,
         formState: { errors },
-    } = useForm<Fields>()
-    const currentUser = useAppSelector((state) => state.authReducer.user)
+        handleSubmit,
+    } = useForm<Fields>({
+        resolver: yupResolver(editProfileSchema),
+        defaultValues: {
+            username: currentUser.username,
+            nativeLanguage: currentUser.nativeLanguage,
+            languages: currentUser.learningLanguages,
+            bio: currentUser.bio || '',
+        },
+    })
+
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent>
                 <ModalHeader>Change profile</ModalHeader>
                 <ModalCloseButton />
-                <ModalBody>
-                    <VStack as="form">
-                        <FormControl>
+                <ModalBody as="form">
+                    <VStack>
+                        <FormControl isInvalid={'username' in errors}>
                             <FormLabel>Username:</FormLabel>
-                            <Editable
-                                fontSize="2xl"
+                            <Input
+                                type="text"
+                                {...register('username', {
+                                    required: true,
+                                })}
                                 defaultValue={currentUser.username}
-                            >
-                                <EditablePreview />
-                                <EditableInput as="input" />
-                            </Editable>
+                            />
+                            <FormErrorMessage>
+                                {errors.username?.message}
+                            </FormErrorMessage>
                         </FormControl>
                         <Divider />
                         <FormControl>
@@ -82,12 +129,11 @@ export default function EditProfileModal({ isOpen, onClose, onOpen }: Props) {
                             </Select>
                         </FormControl>
                         <Divider />
-                        <FormControl isInvalid={'language' in errors}>
+                        <FormControl isInvalid={'languages' in errors}>
                             <FormLabel as="legend">Studying:</FormLabel>
                             <CheckboxGroup
-                                defaultValue={['japanese']}
+                                defaultValue={currentUser.learningLanguages}
                                 size="lg"
-                                mt="1rem"
                             >
                                 <Flex
                                     gap="1rem"
@@ -160,6 +206,18 @@ export default function EditProfileModal({ isOpen, onClose, onOpen }: Props) {
                                 {errors.languages?.message}
                             </FormErrorMessage>
                         </FormControl>
+                        <Divider />
+                        <FormControl>
+                            <FormLabel>Bio:</FormLabel>
+                            <Textarea
+                                fontSize="1.2rem"
+                                defaultValue={
+                                    currentUser.bio ||
+                                    "You don't have a bio yet.  Click to write one!"
+                                }
+                                {...register('bio')}
+                            />
+                        </FormControl>
                     </VStack>
                 </ModalBody>
 
@@ -167,7 +225,12 @@ export default function EditProfileModal({ isOpen, onClose, onOpen }: Props) {
                     <Button mr={3} onClick={onClose}>
                         Close
                     </Button>
-                    <Button bgColor="blue.400" color="white">
+                    <Button
+                        type="submit"
+                        bgColor="blue.400"
+                        color="white"
+                        onClick={handleSubmit(submitChanges)}
+                    >
                         Submit Changes
                     </Button>
                 </ModalFooter>

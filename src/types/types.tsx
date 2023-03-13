@@ -5,7 +5,10 @@ export type UserAuthSchema = {
     username: string
     loggedIn: boolean
     userId: string | null
-    userImg: string | null
+    userImg: string
+    learningLanguages: LanguageChoices[]
+    nativeLanguage: LanguageChoices
+    bio: string | null
 }
 export interface AuthState {
     user: UserAuthSchema
