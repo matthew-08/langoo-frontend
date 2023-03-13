@@ -2,12 +2,12 @@ export type Views = 'chat' | 'discover' | 'settings'
 
 // Auth
 export type UserAuthSchema = {
-    username: string
-    loggedIn: boolean
+    username: string | null
+    loggedIn: boolean | null
     userId: string | null
-    userImg: string
-    learningLanguages: LanguageChoices[]
-    nativeLanguage: LanguageChoices
+    userImg: string | null
+    learningLanguages: LanguageChoices[] | null
+    nativeLanguage: LanguageChoices | null
     bio: string | null
 }
 export interface AuthState {
