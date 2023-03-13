@@ -22,6 +22,8 @@ type ServerError = {
     type: string
 }
 
+
+// USER LOGIN ATTEMPT
 export const logInAttempt = createAsyncThunk<
     UserAuthSchema,
     LoginForm,
@@ -42,8 +44,8 @@ export const logInAttempt = createAsyncThunk<
     }
     return response.json()
 })
-// GET request sent at initial load, check for existing session.
-// Success returns auth schema.
+
+// CHECK FOR EXISTING SESSION
 export const checkForSession = createAsyncThunk(
     'auth/logInAttempt',
     async () => {
@@ -54,6 +56,7 @@ export const checkForSession = createAsyncThunk(
     }
 )
 
+// REGISTER USER
 export const registerAttempt = createAsyncThunk<
     UserAuthSchema,
     SignUpForm,

@@ -2,7 +2,11 @@ import React, { useEffect } from 'react'
 import { Flex, Box, Toast, useDisclosure } from '@chakra-ui/react'
 import MessageInput from './MessageInput'
 import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
-import { fetchMessages, onMessage } from '../../../features/messagesSlice'
+import {
+    fetchMessages,
+    onMessage,
+    onMessageEdit,
+} from '../../../features/messagesSlice'
 import ChatMessage from './ChatMessage'
 import { Conversation } from '../../../types/types'
 import socket from '../../../socket'
@@ -33,8 +37,12 @@ export default function CurrentConversation() {
         socket.on('chat_message', (data) => {
             dispatch(onMessage(data))
         })
+        socket.on('edit_message', (data) => {
+            dispatch(onMessageEdit(data))
+        })
         return () => {
             socket.off('chat_message')
+            socket.off('edit_message')
         }
     }, [])
 

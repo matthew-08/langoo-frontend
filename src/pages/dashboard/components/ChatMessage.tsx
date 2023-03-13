@@ -19,6 +19,7 @@ import IMAGES from '../../../utils/images'
 import getUserImage from '../../../utils/getUserImg'
 import useOnHoverOutside from '../../../hooks/useOnHover'
 import { onMessageEdit } from '../../../features/messagesSlice'
+import socket from '../../../socket'
 
 export default function ChatMessage({ message }: { message: Message }) {
     const currentUser = useAppSelector((state) => state.authReducer.user)
@@ -67,12 +68,12 @@ export default function ChatMessage({ message }: { message: Message }) {
             userId: message.userId,
             content: editMessage,
         }
-        dispatch(
-            onMessageEdit({
-                conversationId,
-                message: updatedMessage,
-            })
-        )
+        const updatedData = {
+            conversationId,
+            message: updatedMessage,
+        }
+        dispatch(onMessageEdit(updatedData))
+        socket.emit('edit_message', updatedData)
         return setIsEditing(false)
     }
 
