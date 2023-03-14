@@ -1,7 +1,7 @@
 import { LanguageChoices } from '../types/types'
 import IMAGES from './images'
 
-const getflag = (lang: LanguageChoices) => {
+const getflag = (lang: LanguageChoices | undefined) => {
     switch (lang) {
         case 'chinese':
             return IMAGES.flags.china

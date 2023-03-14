@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react'
 import { Flex, Box, Toast, useDisclosure } from '@chakra-ui/react'
 import MessageInput from './MessageInput'
-import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
+import { useAppDispatch, useAppSelector } from '../../../../../utils/hooks'
 import {
     fetchMessages,
     onMessage,
     onMessageEdit,
-} from '../../../features/messagesSlice'
+} from '../../../../../features/messagesSlice'
 import ChatMessage from './ChatMessage'
-import { Conversation } from '../../../types/types'
-import socket from '../../../socket'
 import ChatHeader from './ChatHeader'
-import { conversationFetched } from '../../../features/convoSlice'
+import { Conversation } from '../../../../../types/types'
+import socket from '../../../../../socket'
+import { conversationFetched } from '../../../../../features/convoSlice'
 
 export default function CurrentConversation() {
     const dispatch = useAppDispatch()

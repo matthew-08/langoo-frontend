@@ -9,19 +9,11 @@ import {
     MessagePayload,
 } from '../types/types'
 import { addConvo, fetchConversations } from './convoSlice'
+import { ConversationId, ConversationMessages } from '../types/types'
+import { MessagesState } from '../types/types'
 
-type ConversationId = string
 
-type ConversationMessages = {
-    [key: ConversationId]: {
-        messages: Message[]
-    }
-}
 
-type MessagesState = {
-    conversationMessages: ConversationMessages
-    loading: boolean
-}
 
 const initialState = {
     conversationMessages: {} as ConversationMessages,

@@ -1,5 +1,3 @@
-export type Views = 'chat' | 'discover' | 'settings'
-
 // Auth
 export type UserAuthSchema = {
     username: string | null
@@ -15,19 +13,10 @@ export interface AuthState {
     loading: boolean
     error: string | null
 }
-
 export type LoginForm = {
     username: string
     password: string
 }
-
-export type LanguageChoices =
-    | 'japanese'
-    | 'vietnamese'
-    | 'french'
-    | 'chinese'
-    | 'english'
-
 export interface SignUpForm {
     username: string
     email: string
@@ -38,6 +27,13 @@ export interface SignUpForm {
     profilePic: string
 }
 
+//USER
+export type LanguageChoices =
+    | 'japanese'
+    | 'vietnamese'
+    | 'french'
+    | 'chinese'
+    | 'english'
 export interface User {
     username: string
     userId: string
@@ -48,29 +44,39 @@ export interface User {
     bio: string
     lastLogin: number
 }
-
+//CONVERSATION
 export type Conversation = {
     userId: string
     latestMessage: Message
     conversationId: ConversationId
     fetched: boolean
 }
-
 export type ConversationId = string
+export interface InitialConversationFetch extends Conversation {
+    latestMessage: Message
+}
 
+export type ConversationMessages = {
+    [key: ConversationId]: {
+        messages: Message[]
+    }
+}
+
+//MESSAGE
 export type Message = {
     content: string
     userId: string
     timestamp: string | number
 }
-
-export type SetActiveView = (arg0: Views) => void
-
-export interface InitialConversationFetch extends Conversation {
-    latestMessage: Message
-}
-
 export type MessagePayload = {
     conversationId: ConversationId
     message: Message
 }
+export type MessagesState = {
+    conversationMessages: ConversationMessages
+    loading: boolean
+}
+
+//VIEW
+export type SetActiveView = (arg0: Views) => void
+export type Views = 'chat' | 'discover' | 'settings'

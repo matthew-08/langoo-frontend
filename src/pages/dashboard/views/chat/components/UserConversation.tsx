@@ -1,11 +1,11 @@
 import { Flex, IconButton, VStack, Text, Image } from '@chakra-ui/react'
 import timeago from 'epoch-timeago'
-import { useAppSelector, useAppDispatch } from '../../../utils/hooks'
-import { Conversation } from '../../../types/types'
-import { setActiveConvo } from '../../../features/convoSlice'
-import { viewStatusSet } from '../../../features/viewSlice'
-import getUserImage from '../../../utils/getUserImg'
-import getflag from '../../../utils/getFlag'
+import { useAppSelector, useAppDispatch } from '../../../../../utils/hooks'
+import { Conversation } from '../../../../../types/types'
+import { setActiveConvo } from '../../../../../features/convoSlice'
+import { viewStatusSet } from '../../../../../features/viewSlice'
+import getUserImage from '../../../../../utils/getUserImg'
+import getflag from '../../../../../utils/getFlag'
 
 interface Props {
     convo: Conversation
@@ -19,7 +19,9 @@ export default function UserConversation({ convo }: Props) {
     const isMobileView = useAppSelector(
         (state) => state.viewSlice.smallerThan700
     )
-    const currentUser = useAppSelector((state) => state.authReducer.user.userId)
+    const currentUserId = useAppSelector(
+        (state) => state.authReducer.user.userId
+    )
     const lastMessage = useAppSelector((state) =>
         state.messagesSlice.conversationMessages[
             convo.conversationId
@@ -31,7 +33,7 @@ export default function UserConversation({ convo }: Props) {
             dispatch(viewStatusSet('userConversation'))
         }
     }
-    const lastMessageIsUsers = lastMessage?.userId === currentUser
+    const lastMessageIsUsers = lastMessage?.userId === currentUserId
     const isActiveConvo = useAppSelector(
         (state) =>
             state.convoSlice.activeConvo?.conversationId ===

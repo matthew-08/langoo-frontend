@@ -2,9 +2,6 @@ import {
     Text,
     Flex,
     Image,
-    Box,
-    Container,
-    useDisclosure,
     ButtonGroup,
     IconButton,
     Input,
@@ -13,14 +10,13 @@ import timeago from 'epoch-timeago'
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons'
 import React, { useRef, useState } from 'react'
 import { Form } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
-import { ConversationId, Message } from '../../../types/types'
-import IMAGES from '../../../utils/images'
-import getUserImage from '../../../utils/getUserImg'
-import useOnHoverOutside from '../../../hooks/useOnHover'
-import { onMessageEdit } from '../../../features/messagesSlice'
-import socket from '../../../socket'
-
+import getUserImage from '../../../../../utils/getUserImg'
+import { useAppDispatch, useAppSelector } from '../../../../../utils/hooks'
+import { ConversationId, Message } from '../../../../../types/types'
+import IMAGES from '../../../../../utils/images'
+import socket from '../../../../../socket'
+import useOnHoverOutside from '../../../../../hooks/useOnHover'
+import { onMessageEdit } from '../../../../../features/messagesSlice'
 export default function ChatMessage({ message }: { message: Message }) {
     const currentUser = useAppSelector((state) => state.authReducer.user)
     const dispatch = useAppDispatch()
@@ -62,7 +58,7 @@ export default function ChatMessage({ message }: { message: Message }) {
         setOpen(false)
     }
 
-    const handleSumbit = async (e: React.MouseEvent) => {
+    const handleSumbit = async (e: React.FormEvent) => {
         e.preventDefault()
         if (editMessage === '' || editMessage === message.content) {
             return setIsEditing(false)
