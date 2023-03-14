@@ -5,6 +5,7 @@ import {
     ButtonGroup,
     IconButton,
     Input,
+    useDisclosure,
 } from '@chakra-ui/react'
 import timeago from 'epoch-timeago'
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons'
@@ -17,6 +18,7 @@ import IMAGES from '../../../../../utils/images'
 import socket from '../../../../../socket'
 import useOnHoverOutside from '../../../../../hooks/useOnHover'
 import { onMessageEdit } from '../../../../../features/messagesSlice'
+import DeleteMsgModal from './DeleteMsgModal'
 export default function ChatMessage({ message }: { message: Message }) {
     const currentUser = useAppSelector((state) => state.authReducer.user)
     const dispatch = useAppDispatch()
@@ -25,6 +27,7 @@ export default function ChatMessage({ message }: { message: Message }) {
     const [isEditing, setIsEditing] = useState(false)
     const [editMessage, setEditMessage] = useState('')
     const messageRef = useRef(null)
+    const { isOpen: modalIsOpen, onOpen, onClose } = useDisclosure()
 
     const conversationId = useAppSelector(
         (state) => state.convoSlice.activeConvo?.conversationId
@@ -86,6 +89,8 @@ export default function ChatMessage({ message }: { message: Message }) {
         return setIsEditing(false)
     }
 
+    const handleDelete = () => {}
+
     useOnHoverOutside(messageRef, closeHoverMenu)
     if (isCurrentUser) {
         chatMessage = (
@@ -118,6 +123,7 @@ export default function ChatMessage({ message }: { message: Message }) {
                         <IconButton
                             backgroundColor="gray.700"
                             aria-label="delete-icon"
+                            onClick={onOpen}
                             _hover={{
                                 backgroundColor: 'gray.600',
                             }}
@@ -148,6 +154,13 @@ export default function ChatMessage({ message }: { message: Message }) {
                     borderRadius="full"
                     src={userImg}
                     ml="0.5rem"
+                />
+                <DeleteMsgModal
+                    isOpen={modalIsOpen}
+                    onClose={onClose}
+                    message={message}
+                    conversationId={conversationId}
+                    userTo={userTo as string}
                 />
             </Flex>
         )

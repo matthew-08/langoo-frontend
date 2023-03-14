@@ -24,7 +24,6 @@ import { useAppSelector } from '../../../../utils/hooks'
 import IMAGES from '../../../../utils/images'
 import ChangePhotoModal from './components/ChangePhotoModal'
 import EditProfileModal from './components/EditProfileModal'
-import Modal from './components/Modal'
 
 export type ModalTypes = 'img' | 'profileDetails'
 

@@ -95,20 +95,21 @@ export default function UserConversation({ convo }: Props) {
                         {lastMessage ? timeago(lastMessage?.timestamp) : ''}
                     </Text>
                 </Flex>
-                <Text isTruncated maxW="100%" fontSize="1rem">
+                <Text isTruncated maxW="85%" fontSize="1rem">
                     {lastMessage?.content}
                 </Text>
                 {!lastMessageIsUsers && (
                     <Flex
                         fontSize="0.8rem"
                         position="absolute"
-                        right="3"
-                        bottom="3"
+                        right="1"
+                        bottom="1"
                         border="1px"
                         px="0.4rem"
                         borderRadius="10px"
                         background="green.100"
-                        color="blue.800"
+                        color="blue.900"
+                        fontWeight={'bold'}
                     >
                         Your turn!
                     </Flex>

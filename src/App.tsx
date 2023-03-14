@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import AppRoutes from './routes/AppRoutes'
 import { useAppDispatch, useAppSelector } from './utils/hooks'
 import { checkForSession } from './features/authSlice'
-import { onMessageEdit } from './features/messagesSlice'
+import { onMessageDelete, onMessageEdit } from './features/messagesSlice'
 import socket from './socket'
 
 function App() {
@@ -23,6 +23,9 @@ function App() {
         }
         socket.on('on_edit', (data) => {
             dispatch(onMessageEdit(data))
+        })
+        socket.on('on_delete', (d) => {
+            dispatch(onMessageDelete(d))
         })
         return () => {
             socket.off('on_edit')

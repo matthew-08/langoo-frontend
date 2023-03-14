@@ -70,6 +70,13 @@ const messagesSlice = createSlice({
                 fetchExistingMessage.content = message.content
             }
         },
+        onMessageDelete(state, action: PayloadAction<MessagePayload>) {
+          const { conversationId } = action.payload
+          const { message } = action.payload
+          const convoMessagesRef = state.conversationMessages[conversationId].messages
+          const updateState = convoMessagesRef.filter(msg => msg.timestamp !== message.timestamp)
+          state.conversationMessages[conversationId].messages = updateState
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(fetchMessages.pending, (state) => {
@@ -104,6 +111,6 @@ const messagesSlice = createSlice({
         )
     },
 })
-export const { onMessage, onMessageEdit } = messagesSlice.actions
+export const { onMessage, onMessageEdit, onMessageDelete } = messagesSlice.actions
 
 export default messagesSlice.reducer

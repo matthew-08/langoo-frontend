@@ -8,11 +8,11 @@ import {
     InputLeftAddon,
 } from '@chakra-ui/react'
 import { AttachmentIcon, ChatIcon } from '@chakra-ui/icons'
-import { Conversation } from '../../../types/types'
-import socket from '../../../socket'
-import { onMessage } from '../../../features/messagesSlice'
-import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
-import { updateLatestMessage } from '../../../features/convoSlice'
+import { Conversation } from '../../../../../types/types'
+import socket from '../../../../../socket'
+import { onMessage } from '../../../../../features/messagesSlice'
+import { useAppDispatch, useAppSelector } from '../../../../../utils/hooks'
+import { updateLatestMessage } from '../../../../../features/convoSlice'
 
 function MessageInput({ convo }: { convo: Conversation | undefined }) {
     const dispatch = useAppDispatch()
