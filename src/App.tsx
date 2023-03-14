@@ -6,8 +6,7 @@ import { useAppDispatch, useAppSelector } from './utils/hooks'
 import { checkForSession } from './features/authSlice'
 import { onMessageDelete, onMessageEdit } from './features/messagesSlice'
 import socket from './socket'
-import { Flex } from '@chakra-ui/react'
-import { Text } from '@chakra-ui/react'
+import Loading from './global_components/Loading'
 import Footer from './global_components/Footer'
 
 function App() {
@@ -18,6 +17,7 @@ function App() {
         (state) => state.authReducer.user.loggedIn
     )
     useEffect(() => {
+        // Check if user has an unexpired session
         dispatch(checkForSession())
     }, [])
     useEffect(() => {
@@ -41,7 +41,7 @@ function App() {
                 position: 'relative',
             }}
         >
-            {isLoading ? <div>LOADING</div> : <AppRoutes />}
+            {isLoading ? <Loading /> : <AppRoutes />}
             <Footer />
         </div>
     )
