@@ -233,6 +233,7 @@ export default function RegisterForm() {
                     size="lg"
                     variant="solid"
                     colorScheme="blue"
+                    mb={'1.5rem'}
                 >
                     Create Account
                 </Button>

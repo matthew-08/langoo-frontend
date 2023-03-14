@@ -8,6 +8,7 @@ import { onMessageDelete, onMessageEdit } from './features/messagesSlice'
 import socket from './socket'
 import { Flex } from '@chakra-ui/react'
 import { Text } from '@chakra-ui/react'
+import Footer from './global_components/Footer'
 
 function App() {
     const navigate = useNavigate()
@@ -34,26 +35,14 @@ function App() {
         }
     }, [isLoggedIn])
     return (
-        <div className="App">
+        <div
+            className="App"
+            style={{
+                position: 'relative',
+            }}
+        >
             {isLoading ? <div>LOADING</div> : <AppRoutes />}
-            <Flex
-                as={'footer'}
-                width="100%"
-                position={'fixed'}
-                bottom="0"
-                align={'center'}
-                justify="center"
-            >
-                <Text>Made by {'   '}</Text>
-                <Text
-                    ml={'0.2rem'}
-                    color={'blue.400'}
-                    as={'a'}
-                    href="http://github.com/matthew-08"
-                >
-                    Matthew Crosby
-                </Text>
-            </Flex>
+            <Footer />
         </div>
     )
 }
