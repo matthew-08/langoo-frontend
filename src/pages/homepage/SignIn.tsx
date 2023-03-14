@@ -7,7 +7,12 @@ import {
     Input,
     ButtonGroup,
     Heading,
+    Text,
     VStack,
+    Flex,
+    Image,
+    InputGroup,
+    InputLeftElement,
 } from '@chakra-ui/react'
 import React from 'react'
 import { useForm } from 'react-hook-form'
@@ -18,6 +23,7 @@ import { isFulfilled } from '@reduxjs/toolkit'
 import { logInAttempt } from '../../features/authSlice'
 import { useAppDispatch } from '../../utils/hooks'
 import { LoginForm } from '../../types/types'
+import IMAGES from '../../utils/images'
 
 const validationSchema = Yup.object().shape({
     username: Yup.string()
@@ -66,19 +72,26 @@ function SignIn() {
             onSubmit={handleSubmit(onSubmit)}
             mt="4rem"
         >
-            <Heading>
-                Lang<span
-                color='blue.400'
-                >ooo</span>
-            </Heading>
+            <Flex as={'header'} align="center">
+                <Image src={IMAGES.loginIcon} w="55px" mb={'0.5rem'} />
+                <Heading fontSize={'4xl'}>
+                    Lang
+                    <Text as="span" color="blue.200">
+                        ooo
+                    </Text>
+                </Heading>
+            </Flex>
             <FormControl isInvalid={isError('username')}>
                 <FormLabel fontSize="2xl">Username:</FormLabel>
-                <Input
-                    {...register('username', { required: true })}
-                    placeholder="Enter Username"
-                    autoComplete="off"
-                    size="lg"
-                />
+                <InputGroup>
+                    <Input
+                        {...register('username', { required: true })}
+                        placeholder="Enter Username"
+                        autoComplete="off"
+                        size="lg"
+                    />
+                    <InputLeftElement />
+                </InputGroup>
                 <FormErrorMessage color="red">
                     {errors.username?.message}
                 </FormErrorMessage>

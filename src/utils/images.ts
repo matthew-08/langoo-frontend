@@ -13,6 +13,7 @@ import chat2 from '../assets/chat2.svg'
 import chat3 from '../assets/chat3.svg'
 import logout from '../assets/logout.svg'
 import settings from '../assets/settings.png'
+import loginIcon from '../assets/login-icon.svg'
 
 import defaultImg from '../assets/defaultImg.svg'
 
@@ -35,6 +36,7 @@ const IMAGES = {
     chat3,
     logout,
     settings,
+    loginIcon
 }
 
 export default IMAGES
