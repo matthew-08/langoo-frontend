@@ -60,13 +60,17 @@ function SignIn() {
             m="auto"
             align="center"
             spacing="1rem"
-            border="1px"
-            borderColor="blue.400"
             padding="1rem"
             borderRadius="20px"
+            backgroundColor={'whiteAlpha.100'}
             onSubmit={handleSubmit(onSubmit)}
+            mt="4rem"
         >
-            <Heading>Log In:</Heading>
+            <Heading>
+                Lang<span
+                color='blue.400'
+                >ooo</span>
+            </Heading>
             <FormControl isInvalid={isError('username')}>
                 <FormLabel fontSize="2xl">Username:</FormLabel>
                 <Input
@@ -90,21 +94,32 @@ function SignIn() {
                 <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
             </FormControl>
 
-            <ButtonGroup size="lg" padding="1rem">
+            <VStack
+                as={ButtonGroup}
+                size="lg"
+                padding="0.2rem"
+                alignContent={'center'}
+                justifyContent="center"
+                width={'100%'}
+            >
                 <Button
                     disabled={Object.keys(dirtyFields).length !== 0}
-                    backgroundColor="blue.400"
+                    backgroundColor="blue.700"
                     type="submit"
+                    width="100%"
                 >
                     Login
                 </Button>
                 <Button
                     disabled={!dirtyFields}
                     onClick={() => navigate('/register')}
+                    width="100%"
+                    variant={'outline'}
+                    color="white"
                 >
                     Create Account
                 </Button>
-            </ButtonGroup>
+            </VStack>
         </VStack>
     )
 }
