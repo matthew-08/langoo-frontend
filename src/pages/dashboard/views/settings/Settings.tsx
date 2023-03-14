@@ -1,9 +1,4 @@
-import {
-    AttachmentIcon,
-    EditIcon,
-    SettingsIcon,
-    TriangleUpIcon,
-} from '@chakra-ui/icons'
+import { AttachmentIcon, EditIcon } from '@chakra-ui/icons'
 import {
     Flex,
     Image,
@@ -16,12 +11,11 @@ import {
     ButtonGroup,
     useDisclosure,
 } from '@chakra-ui/react'
-import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import capitalize from '../../../../utils/capitalize'
 import getflag from '../../../../utils/getFlag'
+import getUserImage from '../../../../utils/getUserImg'
 import { useAppSelector } from '../../../../utils/hooks'
-import IMAGES from '../../../../utils/images'
 import ChangePhotoModal from './components/ChangePhotoModal'
 import EditProfileModal from './components/EditProfileModal'
 
@@ -60,7 +54,7 @@ export default function Settings() {
             >
                 <Box>
                     <Image
-                        src={currentUser.userImg}
+                        src={getUserImage(currentUser.userImg)}
                         borderRadius="full"
                         border="4px"
                         borderColor="white"

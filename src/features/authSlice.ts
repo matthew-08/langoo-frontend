@@ -16,6 +16,7 @@ import {
     SignUpForm,
     LoginForm,
 } from '../types/types'
+import { apiURL } from '../utils/apiUrl'
 
 type ServerError = {
     status: string
@@ -31,7 +32,7 @@ export const logInAttempt = createAsyncThunk<
         rejectValue: ServerError
     }
 >('auth/logInAttempt', async (user, { rejectWithValue }) => {
-    const response = await fetch('http://localhost:3000/auth/signIn', {
+    const response = await fetch(`${apiURL}/auth/signIn`, {
         method: 'POST',
         credentials: 'include',
         body: JSON.stringify(user),
@@ -49,7 +50,7 @@ export const logInAttempt = createAsyncThunk<
 export const checkForSession = createAsyncThunk(
     'auth/logInAttempt',
     async () => {
-        const response = await fetch('http://localhost:3000/auth/signIn', {
+        const response = await fetch(`${apiURL}/auth/signIn`, {
             credentials: 'include',
         })
         return response.json()
@@ -65,7 +66,7 @@ export const registerAttempt = createAsyncThunk<
     }
 >('auth/signUpAttempt', async (signUpForm: SignUpForm, { rejectWithValue }) => {
     try {
-        const response = await fetch('http://localhost:3000/auth/register', {
+        const response = await fetch(`${apiURL}/auth/register`, {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify(signUpForm),
