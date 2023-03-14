@@ -12,6 +12,7 @@ import {
     Flex,
     Image,
     InputGroup,
+    Icon,
     InputLeftElement,
 } from '@chakra-ui/react'
 import React from 'react'
@@ -24,6 +25,8 @@ import { logInAttempt } from '../../features/authSlice'
 import { useAppDispatch } from '../../utils/hooks'
 import { LoginForm } from '../../types/types'
 import IMAGES from '../../utils/images'
+import { AiOutlineUser } from 'react-icons/ai'
+import { LockIcon } from '@chakra-ui/icons'
 
 const validationSchema = Yup.object().shape({
     username: Yup.string()
@@ -72,7 +75,7 @@ function SignIn() {
             onSubmit={handleSubmit(onSubmit)}
             mt="4rem"
         >
-            <Flex as={'header'} align="center">
+            <Flex as={'header'} align="center" mb={'0.5rem'} mt="2rem">
                 <Image src={IMAGES.loginIcon} w="55px" mb={'0.5rem'} />
                 <Heading fontSize={'4xl'}>
                     Lang
@@ -90,7 +93,11 @@ function SignIn() {
                         autoComplete="off"
                         size="lg"
                     />
-                    <InputLeftElement />
+                    <InputLeftElement
+                        children={
+                            <Icon boxSize={6} mt="0.5rem" as={AiOutlineUser} />
+                        }
+                    />
                 </InputGroup>
                 <FormErrorMessage color="red">
                     {errors.username?.message}
@@ -98,15 +105,24 @@ function SignIn() {
             </FormControl>
             <FormControl isInvalid={isError('password')}>
                 <FormLabel fontSize="2xl">Password:</FormLabel>
-                <Input
-                    {...register('password')}
-                    placeholder="Password"
-                    autoComplete="off"
-                    size="lg"
-                />
+                <InputGroup>
+                    <Input
+                        {...register('password')}
+                        placeholder="Password"
+                        autoComplete="off"
+                        size="lg"
+                    />
+                    <InputLeftElement children={<LockIcon mt={'0.5rem'} />} />
+                </InputGroup>
                 <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
             </FormControl>
-
+            <Text ml={'auto'} w="100%">
+                Forgot your password?
+                <Text as={'a'} color="blue.400">
+                    {' '}
+                    Click here.
+                </Text>
+            </Text>
             <VStack
                 as={ButtonGroup}
                 size="lg"
@@ -114,10 +130,15 @@ function SignIn() {
                 alignContent={'center'}
                 justifyContent="center"
                 width={'100%'}
+                pb="2rem"
             >
                 <Button
                     disabled={Object.keys(dirtyFields).length !== 0}
-                    backgroundColor="blue.700"
+                    backgroundColor="blue.300"
+                    _hover={{
+                        backgroundColor: 'blue.400',
+                    }}
+                    color="white"
                     type="submit"
                     width="100%"
                 >
@@ -128,10 +149,23 @@ function SignIn() {
                     onClick={() => navigate('/register')}
                     width="100%"
                     variant={'outline'}
-                    color="white"
+                    color="blue.200"
+                    border={'2px'}
+                    borderColor="blue.200"
                 >
-                    Create Account
+                    Sample Account
                 </Button>
+                <Text>
+                    Don't have an account?{' '}
+                    <Text
+                        as={'a'}
+                        color="blue.400"
+                        cursor={'pointer'}
+                        onClick={() => navigate('/register')}
+                    >
+                        Sign up now!
+                    </Text>
+                </Text>
             </VStack>
         </VStack>
     )
