@@ -53,7 +53,7 @@ function SignIn() {
             if (isFulfilled(res)) {
                 return navigate('/chat')
             }
-            return setError({
+            return setError('root', {
                 type: res.payload?.type,
                 message: res.payload?.status,
             })

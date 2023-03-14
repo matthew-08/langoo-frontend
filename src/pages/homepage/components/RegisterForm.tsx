@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react'
+// DISABLED FOR REACT-HOOK-FORM
 import {
     Button,
     ButtonGroup,
@@ -50,8 +50,6 @@ const signUpSchema = Yup.object().shape({
         .oneOf([Yup.ref('password')], 'Passwords must match'),
     languages: Yup.array().min(1, 'You must choose at least one language'),
 })
-
-type ProfilePic = 'girl' | 'boy' | null
 
 export default function RegisterForm() {
     const {
