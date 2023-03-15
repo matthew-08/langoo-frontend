@@ -21,6 +21,7 @@ function MessageInput({ convo }: { convo: Conversation | undefined }) {
     const [input, setInput] = useState<string>('')
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+        setInput('')
         if (convo) {
             const date = new Date().getTime()
             const message = {
@@ -67,7 +68,6 @@ function MessageInput({ convo }: { convo: Conversation | undefined }) {
                 })
             )
         }
-        setInput('')
     }
     return (
         <HStack width="100%" pl="1rem" pr="1rem" mt="auto" pb="1rem">
