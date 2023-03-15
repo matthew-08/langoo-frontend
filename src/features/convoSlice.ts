@@ -36,7 +36,7 @@ void,
   async (_, { getState }) => {
     const { userId } = getState().authReducer.user;
     console.log(userId);
-    const userConvos = await fetch(`http://localhost:3000/userInfo/allConvos/${userId}`);
+    const userConvos = await fetch(`${apiURL}/${userId}`);
     return userConvos.json();
   },
 );
