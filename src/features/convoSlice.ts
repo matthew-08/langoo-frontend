@@ -87,6 +87,7 @@ const convoSlice = createSlice({
       if(findConvo) {
         findConvo.fetched = true
       }
+      state.conversations.sort((a, b) => Number(b.latestMessage.timestamp) - Number(a.latestMessage.timestamp));
     }
   },
   extraReducers: (builder) => {
