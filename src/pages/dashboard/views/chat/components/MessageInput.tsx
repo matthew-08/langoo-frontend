@@ -30,23 +30,6 @@ function MessageInput({ convo }: { convo: Conversation | undefined }) {
                 userId: currentUser,
                 conversationId: convo.conversationId,
             }
-            await fetch(`${apiURL}/convo/sendMessage`, {
-                method: 'POST',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(message),
-            })
-            socket.emit('private_chat', {
-                message: {
-                    timestamp: date,
-                    content: input,
-                    userId: currentUser,
-                },
-                conversationId: convo.conversationId,
-                to: convo.userId,
-            })
             dispatch(
                 onMessage({
                     conversationId: convo.conversationId,
@@ -67,6 +50,23 @@ function MessageInput({ convo }: { convo: Conversation | undefined }) {
                     },
                 })
             )
+            await fetch(`${apiURL}/convo/sendMessage`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(message),
+            })
+            socket.emit('private_chat', {
+                message: {
+                    timestamp: date,
+                    content: input,
+                    userId: currentUser,
+                },
+                conversationId: convo.conversationId,
+                to: convo.userId,
+            })
         }
     }
     return (
