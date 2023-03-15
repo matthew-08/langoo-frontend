@@ -18,6 +18,7 @@ import 'react-image-crop/dist/ReactCrop.css'
 import ReactCrop, { Crop } from 'react-image-crop'
 import canvasPreview from './canvasPreview'
 import { PixelCrop } from 'react-image-crop'
+import { apiURL } from '../../../../../utils/apiUrl'
 
 interface Props {
     isOpen: boolean
@@ -64,7 +65,7 @@ function ChangePhotoModal({ isOpen, onOpen, onClose }: Props) {
         } else {
             const formData = new FormData()
             formData.append('image', file)
-            await fetch('http://localhost:3000/userInfo/uploadImage', {
+            await fetch(`${apiURL}userInfo/uploadImage`, {
                 body: formData,
                 method: 'POST',
                 credentials: 'include',
