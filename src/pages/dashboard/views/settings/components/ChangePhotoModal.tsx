@@ -65,7 +65,7 @@ function ChangePhotoModal({ isOpen, onOpen, onClose }: Props) {
         } else {
             const formData = new FormData()
             formData.append('image', file)
-            await fetch(`${apiURL}userInfo/uploadImage`, {
+            await fetch(`${apiURL}/userInfo/uploadImage`, {
                 body: formData,
                 method: 'POST',
                 credentials: 'include',
