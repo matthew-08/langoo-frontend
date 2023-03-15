@@ -92,11 +92,13 @@ export default function UserConversation({ convo }: Props) {
                 >
                     <Text fontWeight="bold">{user?.username}</Text>
                     <Text fontSize="0.8rem">
-                        {lastMessage ? timeago(lastMessage?.timestamp) : ''}
+                        {lastMessage?.timestamp
+                            ? timeago(lastMessage?.timestamp)
+                            : ''}
                     </Text>
                 </Flex>
                 <Text isTruncated maxW="85%" fontSize="1rem">
-                    {lastMessage?.content}
+                    {lastMessage?.content || ''}
                 </Text>
                 {!lastMessageIsUsers && (
                     <Flex
