@@ -95,6 +95,7 @@ function MessageInput({ convo }: { convo: Conversation | undefined }) {
                         colorScheme="teal"
                         border="none"
                         disabled={!convo && true}
+                        value={input}
                         onChange={(e) => setInput(e.target.value)}
                     />
                 </InputGroup>
