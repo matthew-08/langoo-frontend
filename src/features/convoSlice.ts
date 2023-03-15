@@ -99,8 +99,6 @@ const convoSlice = createSlice({
       state.loading = false;
       state.conversations = action.payload;
       state.conversations.map(convo => convo.fetched = false)
-      state.conversations
-        .sort((a, b) => Number(a.latestMessage.timestamp) - Number(b.latestMessage.timestamp));
     });
     builder.addCase(addConvo.fulfilled, (state, action) => {
       state.conversations.push(action.payload);
