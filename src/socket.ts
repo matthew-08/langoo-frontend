@@ -1,6 +1,7 @@
 import { io } from 'socket.io-client';
+import { apiURL } from './utils/apiUrl';
 
-const socket = io('http://localhost:3000', {
+const socket = io(`${apiURL}`, {
   autoConnect: false,
   withCredentials: true,
 });
