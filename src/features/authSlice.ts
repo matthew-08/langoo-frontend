@@ -119,6 +119,7 @@ const authReducer = createSlice({
         builder.addMatcher(checkRejected, (state, action) => {
             state.loading = false
             state.user = initialState.user // reset to initial user state for safety
+            console.log(action.payload);
             if (action.payload) {
                 state.error = action.payload.status
             }
