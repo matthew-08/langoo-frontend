@@ -21,7 +21,7 @@ function MessageInput({ convo }: { convo: Conversation | undefined }) {
     const [input, setInput] = useState<string>('')
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        setInput('')
+        setInput((prev) => '')
         if (convo) {
             const date = new Date().getTime()
             const message = {
