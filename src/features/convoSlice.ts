@@ -36,9 +36,8 @@ void,
   async (_, { getState }) => {
     const { userId } = getState().authReducer.user;
     console.log(userId);
-    const userConvos = await fetch(`${apiURL}/${userId}`, {
+    const userConvos = await fetch(`${apiURL}/convo/${userId}`, {
       credentials: 'include',
-
     });
     return userConvos.json();
   },
