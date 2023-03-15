@@ -30,6 +30,7 @@ import { useAppDispatch, useAppSelector } from '../../../../../utils/hooks'
 import IMAGES from '../../../../../utils/images'
 import { LanguageChoices } from '../../../../../types/types'
 import { checkForSession } from '../../../../../features/authSlice'
+import { apiURL } from '../../../../../utils/apiUrl'
 
 interface Props {
     isOpen: boolean
@@ -61,7 +62,7 @@ export default function EditProfileModal({ isOpen, onClose, onOpen }: Props) {
             updatedInfo: data,
             userId: currentUser.userId,
         }
-        await fetch('http://localhost:3000/userInfo/updateUser', {
+        await fetch(`${apiURL}/userInfo/updateUser`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dataToPut),
