@@ -76,6 +76,9 @@ export type MessagesState = {
     conversationMessages: ConversationMessages
     loading: boolean
 }
+export interface SocketMessage extends MessagePayload {
+    to: string
+}
 
 //VIEW
 export type SetActiveView = (arg0: Views) => void

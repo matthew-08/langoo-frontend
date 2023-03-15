@@ -10,6 +10,7 @@ import Loading from './global_components/Loading'
 import Footer from './global_components/Footer'
 import { Grid } from 'react-loader-spinner'
 import { Flex } from '@chakra-ui/react'
+import { MessagePayload, SocketMessage } from './types/types'
 
 function App() {
     const navigate = useNavigate()
@@ -26,10 +27,10 @@ function App() {
         if (isLoggedIn) {
             navigate('/chat')
         }
-        socket.on('on_edit', (data) => {
+        socket.on('on_edit', (data: SocketMessage) => {
             dispatch(onMessageEdit(data))
         })
-        socket.on('on_delete', (d) => {
+        socket.on('on_delete', (d: MessagePayload) => {
             dispatch(onMessageDelete(d))
         })
         return () => {
