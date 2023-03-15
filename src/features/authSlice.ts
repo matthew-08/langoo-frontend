@@ -17,12 +17,11 @@ import {
 } from '../types/types'
 import { apiURL } from '../utils/apiUrl'
 
+
 type ServerError = {
     status: string
     type: string
 }
-
-
 // USER LOGIN ATTEMPT
 export const logInAttempt = createAsyncThunk<
     UserAuthSchema,

@@ -104,6 +104,7 @@ function SignIn() {
                         placeholder="Password"
                         autoComplete="off"
                         size="lg"
+                        type={'password'}
                     />
                     <InputLeftElement children={<LockIcon mt={'0.5rem'} />} />
                 </InputGroup>
