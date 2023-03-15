@@ -10,13 +10,19 @@ import {
     Input,
     InputGroup,
     InputLeftElement,
+    Image,
+    Box,
+    Divider,
 } from '@chakra-ui/react'
-import { Search2Icon } from '@chakra-ui/icons'
+import { ArrowLeftIcon, Search2Icon } from '@chakra-ui/icons'
 import { useAppDispatch, useAppSelector } from '../../../../utils/hooks'
 import { fetchConversations } from '../../../../features/convoSlice'
 import UserConversation from './components/UserConversation'
 import { isSmallerThan700 } from '../../../../features/viewSlice'
 import CurrentConversation from './components/CurrentConversation'
+import MainLogo from '../../../../global_components/MainLogo'
+import IMAGES from '../../../../utils/images'
+import whiteFilter from '../../../../utils/whiteFilter'
 
 export default function Chat() {
     const conversationList = useAppSelector(
@@ -93,17 +99,32 @@ export default function Chat() {
                 <Flex
                     w="70%"
                     maxW="70%"
-                    justify="center"
                     display={checkIsSmallerThan700 ? 'none' : 'flex'}
                     flexDir="column"
+                    align={'center'}
                 >
-                    <Heading mx="auto" textAlign="center">
-                        Welcome to Langoop!
-                    </Heading>
-                    <Text>
-                        Click an existing conversation or the discover section
-                        to start chatting now!
-                    </Text>
+                    <MainLogo />
+                    <Divider mt={'1rem'} />
+                    <Flex mt={'1rem'} px="1rem">
+                        <Text fontSize={'1.3rem'} textAlign="center">
+                            Langooo is a language exchange themed chat app.
+                            <br />
+                            <br />
+                            You can view active conversations in the panel to
+                            the left or discover fellow language learners by
+                            clicking the
+                            <Box as="span" mx="0.4rem" display={'inline-block'}>
+                                <Image
+                                    mt={'0.4rem'}
+                                    display={'inline-block'}
+                                    src={IMAGES.chat2}
+                                    filter={whiteFilter}
+                                    boxSize="7"
+                                />
+                            </Box>
+                            icon in the sidebar.
+                        </Text>
+                    </Flex>
                 </Flex>
             )}
         </Flex>

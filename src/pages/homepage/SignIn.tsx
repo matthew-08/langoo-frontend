@@ -27,6 +27,7 @@ import { LoginForm } from '../../types/types'
 import IMAGES from '../../utils/images'
 import { AiOutlineUser } from 'react-icons/ai'
 import { LockIcon } from '@chakra-ui/icons'
+import MainLogo from '../../global_components/MainLogo'
 
 const validationSchema = Yup.object().shape({
     username: Yup.string()
@@ -75,15 +76,7 @@ function SignIn() {
             onSubmit={handleSubmit(onSubmit)}
             mt="4rem"
         >
-            <Flex as={'header'} align="center" mb={'0.5rem'} mt="2rem">
-                <Image src={IMAGES.loginIcon} w="55px" mb={'0.5rem'} />
-                <Heading fontSize={'4xl'}>
-                    Lang
-                    <Text as="span" color="blue.200">
-                        ooo
-                    </Text>
-                </Heading>
-            </Flex>
+            <MainLogo />
             <FormControl isInvalid={isError('username')}>
                 <FormLabel fontSize="2xl">Username:</FormLabel>
                 <InputGroup>

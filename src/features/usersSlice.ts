@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { User } from '../types/types'
+import { apiURL } from '../utils/apiUrl'
 
 interface UsersState {
     allUsers: User[]
@@ -13,7 +14,7 @@ const initialState = {
 } as UsersState
 
 export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
-    const response = await fetch('http://localhost:3000/userInfo/allUsers/', {
+    const response = await fetch(`${apiURL}/userInfo/allUsers/`, {
         credentials: 'include',
     })
     return response.json()

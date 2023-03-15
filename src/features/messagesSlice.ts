@@ -11,6 +11,7 @@ import {
 import { addConvo, fetchConversations } from './convoSlice'
 import { ConversationId, ConversationMessages } from '../types/types'
 import { MessagesState } from '../types/types'
+import { apiURL } from '../utils/apiUrl'
 
 
 
@@ -33,7 +34,7 @@ export const fetchMessages = createAsyncThunk<
     }
 >('messages/fetchMessages', async (convoId) => {
     const messages = await fetch(
-        `http://localhost:3000/convo/getAllMessages/${convoId}`
+        `${apiURL}/convo/getAllMessages/${convoId}`
     )
     const payload = {
         messages: await messages.json(),

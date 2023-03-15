@@ -9,6 +9,7 @@ import {
   InitialConversationFetch,
   MessagePayload,
 } from '../types/types';
+import { apiURL } from '../utils/apiUrl';
 
 type ConvoState = {
   conversations: Conversation[],
@@ -49,7 +50,7 @@ User['userId'],
 >('/convo/addConvo', async (otherUserId, { getState }) => {
   const { userId: currentUserId } = getState().authReducer.user;
   const postConvo = await fetch(`
-  http://localhost:3000/convo/addConvo/${currentUserId}/${otherUserId}`, {
+  ${apiURL}/convo/addConvo/${currentUserId}/${otherUserId}`, {
     method: 'POST',
     credentials: 'include',
   });

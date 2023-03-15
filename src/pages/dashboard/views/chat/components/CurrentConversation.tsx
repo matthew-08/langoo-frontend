@@ -1,12 +1,8 @@
 import React, { useEffect } from 'react'
-import { Flex, Box, Toast, useDisclosure } from '@chakra-ui/react'
+import { Flex, Box } from '@chakra-ui/react'
 import MessageInput from './MessageInput'
 import { useAppDispatch, useAppSelector } from '../../../../../utils/hooks'
-import {
-    fetchMessages,
-    onMessage,
-    onMessageEdit,
-} from '../../../../../features/messagesSlice'
+import { fetchMessages, onMessage } from '../../../../../features/messagesSlice'
 import ChatMessage from './ChatMessage'
 import ChatHeader from './ChatHeader'
 import { Conversation } from '../../../../../types/types'

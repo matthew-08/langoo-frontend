@@ -13,6 +13,7 @@ import socket from '../../../../../socket'
 import { onMessage } from '../../../../../features/messagesSlice'
 import { useAppDispatch, useAppSelector } from '../../../../../utils/hooks'
 import { updateLatestMessage } from '../../../../../features/convoSlice'
+import { apiURL } from '../../../../../utils/apiUrl'
 
 function MessageInput({ convo }: { convo: Conversation | undefined }) {
     const dispatch = useAppDispatch()
@@ -28,7 +29,7 @@ function MessageInput({ convo }: { convo: Conversation | undefined }) {
                 userId: currentUser,
                 conversationId: convo.conversationId,
             }
-            await fetch('http://localhost:3000/convo/sendMessage', {
+            await fetch(`${apiURL}/convo/sendMessage`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {

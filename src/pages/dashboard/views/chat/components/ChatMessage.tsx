@@ -19,6 +19,7 @@ import socket from '../../../../../socket'
 import useOnHoverOutside from '../../../../../hooks/useOnHover'
 import { onMessageEdit } from '../../../../../features/messagesSlice'
 import DeleteMsgModal from './DeleteMsgModal'
+import { apiURL } from '../../../../../utils/apiUrl'
 export default function ChatMessage({ message }: { message: Message }) {
     const currentUser = useAppSelector((state) => state.authReducer.user)
     const dispatch = useAppDispatch()
@@ -77,7 +78,7 @@ export default function ChatMessage({ message }: { message: Message }) {
             to: userTo,
         }
         dispatch(onMessageEdit(updatedData))
-        await fetch('http://localhost:3000/convo/updateMessage', {
+        await fetch(`${apiURL}/convo/updateMessage`, {
             method: 'PUT',
             credentials: 'include',
             body: JSON.stringify(updatedMessage),

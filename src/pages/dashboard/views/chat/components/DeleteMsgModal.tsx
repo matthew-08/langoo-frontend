@@ -12,6 +12,7 @@ import { onMessageDelete } from '../../../../../features/messagesSlice'
 import { ConversationId, Message } from '../../../../../types/types'
 import { useAppDispatch } from '../../../../../utils/hooks'
 import socket from '../../../../../socket'
+import { apiURL } from '../../../../../utils/apiUrl'
 
 interface Props {
     isOpen: boolean
@@ -44,7 +45,7 @@ function DeleteMsgModal({
             to: userTo,
         })
         await fetch(
-            `http://localhost:3000/convo/deleteMessage/${conversationId}/${message.timestamp}`,
+            `${apiURL}/convo/deleteMessage/${conversationId}/${message.timestamp}`,
             {
                 method: 'DELETE',
                 credentials: 'include',

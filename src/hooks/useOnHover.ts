@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 
 function useOnHoverOutside(
     ref: React.MutableRefObject<null | HTMLElement>,

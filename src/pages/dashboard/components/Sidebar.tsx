@@ -21,6 +21,7 @@ import IMAGES from '../../../utils/images'
 import whiteFilter from '../../../utils/whiteFilter'
 import SidebarButton from './SidebarButton'
 import { useNavigate } from 'react-router-dom'
+import { apiURL } from '../../../utils/apiUrl'
 
 interface Props {
     switchView: (view: 'chat' | 'discover' | 'settings') => void
@@ -34,7 +35,7 @@ export default function Sidebar({ switchView, activeView }: Props) {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const user = useAppSelector((state) => state.authReducer.user)
     const handleLogOut = async () => {
-        await fetch('http://localhost:3000/auth/logout', {
+        await fetch(`${apiURL}/auth/logout`, {
             credentials: 'include',
         }).then((res) => {
             navigate('/')
