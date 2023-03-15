@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../../../../utils/hooks'
 import { fetchMessages, onMessage } from '../../../../../features/messagesSlice'
 import ChatMessage from './ChatMessage'
 import ChatHeader from './ChatHeader'
-import { Conversation } from '../../../../../types/types'
+import { Conversation, MessagePayload } from '../../../../../types/types'
 import socket from '../../../../../socket'
 import { conversationFetched } from '../../../../../features/convoSlice'
 
@@ -31,7 +31,7 @@ export default function CurrentConversation() {
             ].messages
     )
     useEffect(() => {
-        socket.on('chat_message', (data) => {
+        socket.on('chat_message', (data: MessagePayload) => {
             dispatch(onMessage(data))
         })
         socket.on('on_edit', () => {

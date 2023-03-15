@@ -16,14 +16,10 @@ import {
     Checkbox,
     CheckboxGroup,
     Image,
-    Editable,
-    EditablePreview,
-    EditableInput,
     FormLabel,
     FormControl,
     Flex,
     useMediaQuery,
-    EditableTextarea,
     Input,
     Textarea,
 } from '@chakra-ui/react'
@@ -83,10 +79,10 @@ export default function EditProfileModal({ isOpen, onClose, onOpen }: Props) {
     } = useForm<Fields>({
         resolver: yupResolver(editProfileSchema),
         defaultValues: {
-            username: currentUser.username,
-            nativeLanguage: currentUser.nativeLanguage,
-            languages: currentUser.learningLanguages,
-            bio: currentUser.bio || '',
+            username: currentUser.username!,
+            nativeLanguage: currentUser.nativeLanguage!,
+            languages: currentUser.learningLanguages!,
+            bio: currentUser.bio!,
         },
     })
 
@@ -105,7 +101,7 @@ export default function EditProfileModal({ isOpen, onClose, onOpen }: Props) {
                                 {...register('username', {
                                     required: true,
                                 })}
-                                defaultValue={currentUser.username}
+                                defaultValue={currentUser.username!}
                             />
                             <FormErrorMessage>
                                 {errors.username?.message}
@@ -132,7 +128,7 @@ export default function EditProfileModal({ isOpen, onClose, onOpen }: Props) {
                         <FormControl isInvalid={'languages' in errors}>
                             <FormLabel as="legend">Studying:</FormLabel>
                             <CheckboxGroup
-                                defaultValue={currentUser.learningLanguages}
+                                defaultValue={currentUser.learningLanguages!}
                                 size="lg"
                             >
                                 <Flex

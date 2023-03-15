@@ -8,10 +8,6 @@ export default function useSocketSetup() {
             console.log('connection error')
         })
 
-        socket.on('users', (users) => {
-            console.log(users)
-        })
-
         return () => {
             socket.off('connect_error')
         }

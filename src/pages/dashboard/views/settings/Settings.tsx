@@ -12,6 +12,7 @@ import {
     useDisclosure,
 } from '@chakra-ui/react'
 import { v4 as uuidv4 } from 'uuid'
+import { UserAuthSchema } from '../../../../types/types'
 import capitalize from '../../../../utils/capitalize'
 import getflag from '../../../../utils/getFlag'
 import getUserImage from '../../../../utils/getUserImg'
@@ -34,7 +35,9 @@ export default function Settings() {
         onClose: imgOnClose,
     } = useDisclosure()
 
-    const currentUser = useAppSelector((state) => state.authReducer.user)
+    const currentUser = useAppSelector(
+        (state) => state.authReducer.user
+    ) as UserAuthSchema
 
     return (
         <Flex
@@ -85,23 +88,24 @@ export default function Settings() {
                             Studying:
                         </Heading>
                         <HStack>
-                            {currentUser.learningLanguages.map((lang) => {
-                                return (
-                                    <Flex
-                                        align="center"
-                                        gap="0.2rem"
-                                        key={uuidv4()}
-                                    >
-                                        <Text as="span">
-                                            {capitalize(lang)}
-                                        </Text>
-                                        <Image
-                                            src={getflag(lang)}
-                                            boxSize="20px"
-                                        />
-                                    </Flex>
-                                )
-                            })}
+                            {currentUser.learningLanguages &&
+                                currentUser.learningLanguages.map((lang) => {
+                                    return (
+                                        <Flex
+                                            align="center"
+                                            gap="0.2rem"
+                                            key={uuidv4()}
+                                        >
+                                            <Text as="span">
+                                                {capitalize(lang)}
+                                            </Text>
+                                            <Image
+                                                src={getflag(lang)}
+                                                boxSize="20px"
+                                            />
+                                        </Flex>
+                                    )
+                                })}
                         </HStack>
                     </VStack>
                     <Heading fontSize="1.3rem">Bio:</Heading>
