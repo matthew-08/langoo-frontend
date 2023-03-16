@@ -40,10 +40,12 @@ function NewChatModal({
 
     const submitConvo = () => {
         dispatch(addConvo(userClicked.userId))
-            .then((res) => {
+            .then(async (res) => {
+                console.log(res)
                 if (addConvo.fulfilled.match(res)) {
+                    console.log('going to messagehandler')
                     const newConvo = res.payload
-                    messageHandler(newConvo, currentUserId!, input)
+                    await messageHandler(newConvo, currentUserId!, input)
                 }
             })
             .then(() => {
