@@ -11,6 +11,7 @@ const messageHandler = async (
     currentUser: string,
     input: string
 ) => {
+    console.log('message in message handler')
     const date = new Date().getTime()
     const message = {
         timestamp: date,

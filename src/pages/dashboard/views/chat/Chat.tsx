@@ -14,7 +14,7 @@ import {
     Box,
     Divider,
 } from '@chakra-ui/react'
-import { ArrowLeftIcon, Search2Icon } from '@chakra-ui/icons'
+import { Search2Icon } from '@chakra-ui/icons'
 import { useAppDispatch, useAppSelector } from '../../../../utils/hooks'
 import { fetchConversations } from '../../../../features/convoSlice'
 import UserConversation from './components/UserConversation'
@@ -101,22 +101,22 @@ export default function Chat() {
                     maxW="70%"
                     display={checkIsSmallerThan700 ? 'none' : 'flex'}
                     flexDir="column"
-                    align={'center'}
+                    align="center"
                 >
                     <MainLogo />
-                    <Divider mt={'1rem'} />
-                    <Flex mt={'1rem'} px="1rem">
-                        <Text fontSize={'1.3rem'} textAlign="center">
+                    <Divider mt="1rem" />
+                    <Flex mt="1rem" px="1rem">
+                        <Text fontSize="1.3rem" textAlign="center">
                             Langooo is a language exchange themed chat app.
                             <br />
                             <br />
                             You can view active conversations in the panel to
                             the left or discover fellow language learners by
                             clicking the
-                            <Box as="span" mx="0.4rem" display={'inline-block'}>
+                            <Box as="span" mx="0.4rem" display="inline-block">
                                 <Image
-                                    mt={'0.4rem'}
-                                    display={'inline-block'}
+                                    mt="0.4rem"
+                                    display="inline-block"
                                     src={IMAGES.chat2}
                                     filter={whiteFilter}
                                     boxSize="7"
