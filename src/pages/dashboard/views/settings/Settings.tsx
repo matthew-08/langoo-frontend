@@ -41,7 +41,7 @@ export default function Settings() {
         (state) => state.authReducer.user
     ) as UserAuthSchema
 
-    const isMobile = dispatch(isSmallerThan700())
+    const isMobile = useAppSelector((state) => state.viewSlice.smallerThan700)
 
     return (
         <Flex
@@ -119,7 +119,7 @@ export default function Settings() {
                             : "You don't have a bio yet"}
                     </Text>
                 </Flex>
-                <ButtonGroup as={Flex} flexDir={isMobile ? 'column' : 'row '}>
+                <ButtonGroup as={Flex} flexDir={isMobile ? 'column' : 'row'}>
                     <Button
                         mt="auto"
                         mb="20px"
