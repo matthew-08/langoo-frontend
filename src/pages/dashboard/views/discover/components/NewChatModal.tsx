@@ -10,7 +10,7 @@ import {
     Text,
     Input,
 } from '@chakra-ui/react'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Action } from '@remix-run/router'
 import { SetActiveView, User } from '../../../../../types/types'
 import { useAppDispatch, useAppSelector } from '../../../../../utils/hooks'
@@ -33,12 +33,16 @@ function NewChatModal({
     setActiveView,
 }: Props) {
     const [input, setInput] = useState('')
+    const [loading, setLoading] = useState(false)
     const dispatch = useAppDispatch()
     const currentUserId = useAppSelector(
         (state) => state.authReducer.user.userId
     )
 
-    const submitConvo = () => {
+    const submitConvo = (e: React.FormEvent) => {
+        console.log('submit convo')
+        e.preventDefault()
+        setLoading(true)
         dispatch(addConvo(userClicked.userId))
             .then(async (res) => {
                 console.log(res)
@@ -56,12 +60,13 @@ function NewChatModal({
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
-            <ModalContent>
+            <ModalContent as="form" onSubmit={submitConvo}>
                 <ModalHeader>New Chat</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
                     <Text>Introduce yourself to {userClicked.username}</Text>
                     <Input
+                        mt="1rem"
                         type="text"
                         onChange={(e) => setInput(e.target.value)}
                         value={input}
@@ -72,7 +77,7 @@ function NewChatModal({
                     <Button colorScheme="blue" mr={3} onClick={onClose}>
                         Cancel
                     </Button>
-                    <Button variant="ghost" onSubmit={submitConvo}>
+                    <Button variant="ghost" type="submit">
                         Message
                     </Button>
                 </ModalFooter>
