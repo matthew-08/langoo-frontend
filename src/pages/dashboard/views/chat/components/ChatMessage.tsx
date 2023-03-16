@@ -20,6 +20,7 @@ import useOnHoverOutside from '../../../../../hooks/useOnHover'
 import { onMessageEdit } from '../../../../../features/messagesSlice'
 import DeleteMsgModal from './DeleteMsgModal'
 import { apiURL } from '../../../../../utils/apiUrl'
+
 export default function ChatMessage({ message }: { message: Message }) {
     const currentUser = useAppSelector((state) => state.authReducer.user)
     const dispatch = useAppDispatch()

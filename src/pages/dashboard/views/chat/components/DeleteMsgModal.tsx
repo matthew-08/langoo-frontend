@@ -8,11 +8,8 @@ import {
     Button,
     ModalCloseButton,
 } from '@chakra-ui/react'
-import { onMessageDelete } from '../../../../../features/messagesSlice'
 import { ConversationId, Message } from '../../../../../types/types'
-import { useAppDispatch } from '../../../../../utils/hooks'
-import socket from '../../../../../socket'
-import { apiURL } from '../../../../../utils/apiUrl'
+import { messageDelete } from '../../../../../utils/messageHandler'
 
 interface Props {
     isOpen: boolean
@@ -29,28 +26,14 @@ function DeleteMsgModal({
     conversationId,
     userTo,
 }: Props) {
-    const dispatch = useAppDispatch()
-    console.log(userTo)
     const handleDelete = async () => {
-        console.log(userTo)
-        dispatch(
-            onMessageDelete({
-                message: message,
-                conversationId: conversationId,
-            })
-        )
-        socket.emit('msg_delete', {
-            message: message,
-            conversationId: conversationId,
-            to: userTo,
+        await messageDelete({
+            conversationId,
+            message,
+            userTo,
+        }).then(() => {
+            onClose()
         })
-        await fetch(
-            `${apiURL}/convo/deleteMessage/${conversationId}/${message.timestamp}`,
-            {
-                method: 'DELETE',
-                credentials: 'include',
-            }
-        )
     }
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
@@ -58,7 +41,7 @@ function DeleteMsgModal({
             <ModalContent>
                 <ModalHeader>Delete message</ModalHeader>
                 <ModalCloseButton />
-                <ModalBody color={'red.100'}>
+                <ModalBody color="red.100">
                     *Are you sure you want to delete this message?
                 </ModalBody>
 
@@ -68,11 +51,11 @@ function DeleteMsgModal({
                     </Button>
                     <Button
                         variant="solid"
-                        color={'black'}
+                        color="black"
                         _hover={{
                             backgroundColor: 'red.300',
                         }}
-                        backgroundColor={'red.400'}
+                        backgroundColor="red.400"
                         onClick={handleDelete}
                     >
                         Delete

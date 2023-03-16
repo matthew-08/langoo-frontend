@@ -1,6 +1,6 @@
-import { Conversation } from '../types/types'
+import { Conversation, Message } from '../types/types'
 import { useAppDispatch } from './hooks'
-import { onMessage } from '../features/messagesSlice'
+import { onMessage, onMessageDelete } from '../features/messagesSlice'
 import { updateLatestMessage } from '../features/convoSlice'
 import { apiURL } from './apiUrl'
 import socket from '../socket'
@@ -58,4 +58,34 @@ const messageHandler = async (
     })
 }
 
+const messageDelete = async ({
+    message,
+    conversationId,
+    userTo,
+}: {
+    message: Message
+    conversationId: Conversation['conversationId']
+    userTo: string
+}) => {
+    store.dispatch(
+        onMessageDelete({
+            message,
+            conversationId,
+        })
+    )
+    socket.emit('msg_delete', {
+        message,
+        conversationId,
+        to: userTo,
+    })
+    await fetch(
+        `${apiURL}/convo/deleteMessage/${conversationId}/${message.timestamp}`,
+        {
+            method: 'DELETE',
+            credentials: 'include',
+        }
+    )
+}
+
 export default messageHandler
+export { messageDelete }

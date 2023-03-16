@@ -44,7 +44,6 @@ export default function Chat() {
         (state) => state.viewSlice.componentViews.allConversations
     )
     useEffect(() => {
-        console.log(checkIsSmallerThan700)
         dispatch(isSmallerThan700(checkIsSmallerThan700))
     }, [checkIsSmallerThan700])
 
