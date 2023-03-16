@@ -103,7 +103,7 @@ const convoSlice = createSlice({
         })
         builder.addCase(fetchConversations.fulfilled, (state, action) => {
             state.loading = false
-            const fetchedConvos = action.payload
+            state.conversations = action.payload
             // eslint-disable-next-line no-return-assign
             state.conversations.map((convo) => (convo.fetched = false))
         })
