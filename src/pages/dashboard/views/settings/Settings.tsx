@@ -12,11 +12,12 @@ import {
     useDisclosure,
 } from '@chakra-ui/react'
 import { v4 as uuidv4 } from 'uuid'
+import { isSmallerThan700 } from '../../../../features/viewSlice'
 import { UserAuthSchema } from '../../../../types/types'
 import capitalize from '../../../../utils/capitalize'
 import getflag from '../../../../utils/getFlag'
 import getUserImage from '../../../../utils/getUserImg'
-import { useAppSelector } from '../../../../utils/hooks'
+import { useAppDispatch, useAppSelector } from '../../../../utils/hooks'
 import ChangePhotoModal from './components/ChangePhotoModal'
 import EditProfileModal from './components/EditProfileModal'
 
@@ -24,6 +25,7 @@ export type ModalTypes = 'img' | 'profileDetails'
 
 export default function Settings() {
     // eslint-disable-next-line react/no-unstable-nested-components
+    const dispatch = useAppDispatch()
     const {
         isOpen: profileIsOpen,
         onOpen: profileOnOpen,
@@ -38,6 +40,8 @@ export default function Settings() {
     const currentUser = useAppSelector(
         (state) => state.authReducer.user
     ) as UserAuthSchema
+
+    const isMobile = dispatch(isSmallerThan700())
 
     return (
         <Flex
@@ -115,7 +119,7 @@ export default function Settings() {
                             : "You don't have a bio yet"}
                     </Text>
                 </Flex>
-                <ButtonGroup>
+                <ButtonGroup as={Flex} flexDir={isMobile ? 'column' : 'row '}>
                     <Button
                         mt="auto"
                         mb="20px"
