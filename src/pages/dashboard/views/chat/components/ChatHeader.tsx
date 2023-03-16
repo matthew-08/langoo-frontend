@@ -18,9 +18,9 @@ import {
 } from '@chakra-ui/react'
 import { ArrowBackIcon, WarningIcon } from '@chakra-ui/icons'
 import timeago from 'epoch-timeago'
+import { v4 as uuid } from 'uuid'
 import { useAppDispatch, useAppSelector } from '../../../../../utils/hooks'
 import { viewStatusSet } from '../../../../../features/viewSlice'
-import cat from '../../../assets/cat.jpg'
 import IMAGES from '../../../../../utils/images'
 import getflag from '../../../../../utils/getFlag'
 import getUserImage from '../../../../../utils/getUserImg'
@@ -144,6 +144,7 @@ export default function ChatHeader() {
                                         {userDetails?.learningLanguages.map(
                                             (lang) => (
                                                 <Image
+                                                    key={uuid()}
                                                     w="20px"
                                                     src={getflag(lang)}
                                                 />

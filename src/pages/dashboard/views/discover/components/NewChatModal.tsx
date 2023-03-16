@@ -11,11 +11,11 @@ import {
     Input,
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
-import { Action } from '@remix-run/router'
 import { SetActiveView, User } from '../../../../../types/types'
 import { useAppDispatch, useAppSelector } from '../../../../../utils/hooks'
 import { addConvo } from '../../../../../features/convoSlice'
 import messageHandler from '../../../../../utils/messageHandler'
+import { viewStatusSet } from '../../../../../features/viewSlice'
 
 interface Props {
     onOpen: () => void
@@ -38,6 +38,9 @@ function NewChatModal({
     const currentUserId = useAppSelector(
         (state) => state.authReducer.user.userId
     )
+    const isSmallerThan700 = useAppSelector(
+        (state) => state.viewSlice.smallerThan700
+    )
 
     const submitConvo = (e: React.FormEvent) => {
         console.log('submit convo')
@@ -54,6 +57,9 @@ function NewChatModal({
             })
             .then(() => {
                 setLoading(false)
+                if (isSmallerThan700) {
+                    dispatch(viewStatusSet('userConversation'))
+                }
                 onClose()
                 setActiveView('chat')
             })
