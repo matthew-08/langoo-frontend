@@ -31,7 +31,7 @@ function NewChatModal({
     userClicked,
     setActiveView,
 }: Props) {
-    const [input, setInput] = useState()
+    const [input, setInput] = useState('')
     const dispatch = useAppDispatch()
 
     const submitConvo = () => {
