@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
-import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript'
 // eslint-disable-next-line import/no-cycle
 import { RootState } from '../store'
 import {
@@ -77,15 +76,13 @@ const convoSlice = createSlice({
             const findConvo = state.conversations.find(
                 (convo) => convo.conversationId === conversationId
             )
-            console.log(message)
-            console.log('in updatelatestmessage')
             if (findConvo) {
                 findConvo.latestMessage = message
-                /* state.conversations.sort(
+                state.conversations.sort(
                     (a, b) =>
                         Number(b.latestMessage.timestamp) -
                         Number(a.latestMessage.timestamp)
-                ) */
+                )
             }
         },
         conversationFetched(state, action: PayloadAction<ConversationId>) {
@@ -96,7 +93,11 @@ const convoSlice = createSlice({
             if (findConvo) {
                 findConvo.fetched = true
             }
-            /* state.conversations.sort((a, b) => Number(b.latestMessage.timestamp) - Number(a.latestMessage.timestamp)); */
+            state.conversations.sort(
+                (a, b) =>
+                    Number(b.latestMessage.timestamp) -
+                    Number(a.latestMessage.timestamp)
+            )
         },
     },
     extraReducers: (builder) => {

@@ -15,6 +15,7 @@ import {
     Divider,
 } from '@chakra-ui/react'
 import { Search2Icon } from '@chakra-ui/icons'
+import { v4 as uuid } from 'uuid'
 import { useAppDispatch, useAppSelector } from '../../../../utils/hooks'
 import { fetchConversations } from '../../../../features/convoSlice'
 import UserConversation from './components/UserConversation'
@@ -61,7 +62,7 @@ export default function Chat() {
         conversations = <div>You dont have any conversations yet.</div>
     } else {
         conversations = conversationList.map((convo) => (
-            <UserConversation convo={convo} />
+            <UserConversation key={uuid()} convo={convo} />
         ))
     }
 
@@ -76,6 +77,7 @@ export default function Chat() {
                 borderRightColor="#2d3055"
                 padding="1rem"
                 display={checkIsSmallerThan700 ? convoView : 'flex'}
+                overflowX="auto"
             >
                 <HStack mr="auto">
                     <Heading fontSize="2xl">Messages</Heading>
