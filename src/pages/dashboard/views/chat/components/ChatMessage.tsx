@@ -20,6 +20,7 @@ import useOnHoverOutside from '../../../../../hooks/useOnHover'
 import { onMessageEdit } from '../../../../../features/messagesSlice'
 import DeleteMsgModal from './DeleteMsgModal'
 import { apiURL } from '../../../../../utils/apiUrl'
+import { messageEdit } from '../../../../../utils/messageHandler'
 
 export default function ChatMessage({ message }: { message: Message }) {
     const currentUser = useAppSelector((state) => state.authReducer.user)
@@ -65,33 +66,16 @@ export default function ChatMessage({ message }: { message: Message }) {
 
     const handleSumbit = async (e: React.FormEvent) => {
         e.preventDefault()
-        if (editMessage === '' || editMessage === message.content) {
-            return setIsEditing(false)
+        if (userTo && isEditing) {
+            messageEdit({
+                conversationId,
+                message,
+                updatedContent: editMessage,
+                userTo,
+            })
         }
-        const updatedMessage: Message = {
-            timestamp: message.timestamp,
-            userId: message.userId,
-            content: editMessage,
-        }
-        const updatedData = {
-            conversationId,
-            message: updatedMessage,
-            to: userTo,
-        }
-        dispatch(onMessageEdit(updatedData))
-        await fetch(`${apiURL}/convo/updateMessage`, {
-            method: 'PUT',
-            credentials: 'include',
-            body: JSON.stringify(updatedMessage),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        socket.emit('edit_message', updatedData)
         return setIsEditing(false)
     }
-
-    const handleDelete = () => {}
 
     useOnHoverOutside(messageRef, closeHoverMenu)
     if (isCurrentUser) {

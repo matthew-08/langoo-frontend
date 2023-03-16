@@ -1,6 +1,9 @@
 import { Conversation, Message } from '../types/types'
-import { useAppDispatch } from './hooks'
-import { onMessage, onMessageDelete } from '../features/messagesSlice'
+import {
+    onMessage,
+    onMessageEdit,
+    onMessageDelete,
+} from '../features/messagesSlice'
 import { updateLatestMessage } from '../features/convoSlice'
 import { apiURL } from './apiUrl'
 import socket from '../socket'
@@ -87,5 +90,38 @@ const messageDelete = async ({
     )
 }
 
+const messageEdit = async ({
+    message,
+    updatedContent,
+    conversationId,
+    userTo,
+}: {
+    message: Message
+    updatedContent: string
+    conversationId: string
+    userTo: string
+}) => {
+    const updatedMessage: Message = {
+        timestamp: message.timestamp,
+        userId: message.userId,
+        content: updatedContent,
+    }
+    const updatedData = {
+        conversationId,
+        message: updatedMessage,
+        to: userTo,
+    }
+    store.dispatch(onMessageEdit(updatedData))
+    await fetch(`${apiURL}/convo/updateMessage`, {
+        method: 'PUT',
+        credentials: 'include',
+        body: JSON.stringify(updatedMessage),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    socket.emit('edit_message', updatedData)
+}
+
 export default messageHandler
-export { messageDelete }
+export { messageDelete, messageEdit }
