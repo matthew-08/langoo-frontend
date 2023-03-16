@@ -4,14 +4,13 @@ import { onMessage } from '../features/messagesSlice'
 import { updateLatestMessage } from '../features/convoSlice'
 import { apiURL } from './apiUrl'
 import socket from '../socket'
+import { store } from '../store'
 
 const messageHandler = async (
     convo: Conversation,
     currentUser: string,
     input: string
 ) => {
-    const dispatch = useAppDispatch()
-
     const date = new Date().getTime()
     const message = {
         timestamp: date,
@@ -19,7 +18,7 @@ const messageHandler = async (
         userId: currentUser,
         conversationId: convo.conversationId,
     }
-    dispatch(
+    store.dispatch(
         onMessage({
             conversationId: convo.conversationId,
             message: {
@@ -29,7 +28,7 @@ const messageHandler = async (
             },
         })
     )
-    dispatch(
+    store.dispatch(
         updateLatestMessage({
             conversationId: convo.conversationId,
             message: {
