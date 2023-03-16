@@ -13,8 +13,9 @@ import {
 import { useState } from 'react'
 import { Action } from '@remix-run/router'
 import { SetActiveView, User } from '../../../../../types/types'
-import { useAppDispatch } from '../../../../../utils/hooks'
+import { useAppDispatch, useAppSelector } from '../../../../../utils/hooks'
 import { addConvo } from '../../../../../features/convoSlice'
+import messageHandler from '../../../../../utils/messageHandler'
 
 interface Props {
     onOpen: () => void
@@ -33,15 +34,22 @@ function NewChatModal({
 }: Props) {
     const [input, setInput] = useState('')
     const dispatch = useAppDispatch()
+    const currentUserId = useAppSelector(
+        (state) => state.authReducer.user.userId
+    )
 
     const submitConvo = () => {
         dispatch(addConvo(userClicked.userId))
             .then((res) => {
                 if (addConvo.fulfilled.match(res)) {
                     const newConvo = res.payload
+                    messageHandler(newConvo, currentUserId!, input)
                 }
             })
-            .then(() => setActiveView('chat'))
+            .then(() => {
+                onClose()
+                setActiveView('chat')
+            })
     }
     return (
         <Modal isOpen={isOpen} onClose={onClose}>

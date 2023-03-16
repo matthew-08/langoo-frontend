@@ -8,7 +8,7 @@ import { store } from '../store'
 
 const messageHandler = async (
     convo: Conversation,
-    currentUser: string,
+    currentUserId: string,
     input: string
 ) => {
     console.log('message in message handler')
@@ -16,7 +16,7 @@ const messageHandler = async (
     const message = {
         timestamp: date,
         content: input,
-        userId: currentUser,
+        userId: currentUserId,
         conversationId: convo.conversationId,
     }
     store.dispatch(
@@ -25,7 +25,7 @@ const messageHandler = async (
             message: {
                 content: input,
                 timestamp: date,
-                userId: currentUser as string,
+                userId: currentUserId as string,
             },
         })
     )
@@ -35,7 +35,7 @@ const messageHandler = async (
             message: {
                 content: input,
                 timestamp: date,
-                userId: currentUser as string,
+                userId: currentUserId as string,
             },
         })
     )
@@ -51,7 +51,7 @@ const messageHandler = async (
         message: {
             timestamp: date,
             content: input,
-            userId: currentUser,
+            userId: currentUserId,
         },
         conversationId: convo.conversationId,
         to: convo.userId,
