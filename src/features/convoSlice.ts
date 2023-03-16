@@ -6,7 +6,6 @@ import {
     User,
     Conversation,
     ConversationId,
-    Message,
     InitialConversationFetch,
     MessagePayload,
 } from '../types/types'
@@ -110,6 +109,11 @@ const convoSlice = createSlice({
             state.conversations = action.payload
             // eslint-disable-next-line no-return-assign
             state.conversations.map((convo) => (convo.fetched = false))
+            state.conversations.sort(
+                (a, b) =>
+                    Number(b.latestMessage.timestamp) -
+                    Number(a.latestMessage.timestamp)
+            )
         })
         builder.addCase(addConvo.fulfilled, (state, action) => {
             state.conversations.push(action.payload)

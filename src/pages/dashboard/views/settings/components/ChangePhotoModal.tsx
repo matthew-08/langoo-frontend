@@ -46,6 +46,8 @@ function ChangePhotoModal({ isOpen, onOpen, onClose }: Props) {
     const hiddenAnchorRef = useRef<HTMLAnchorElement>(null)
     const imgRef = useRef<HTMLImageElement>(null)
 
+    const [loading, setLoading] = useState(false)
+
     const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             /*  setCrop(undefined); */
@@ -65,6 +67,7 @@ function ChangePhotoModal({ isOpen, onOpen, onClose }: Props) {
         if (!validFileTypes.find((type) => file.type === type)) {
             setError('Invalid file type')
         } else {
+            setLoading(true)
             const formData = new FormData()
             formData.append('image', file)
             await fetch(`${apiURL}/userInfo/uploadImage`, {
@@ -72,6 +75,7 @@ function ChangePhotoModal({ isOpen, onOpen, onClose }: Props) {
                 method: 'POST',
                 credentials: 'include',
             }).then(() => {
+                setLoading(false)
                 dispatch(checkForSession())
                 onClose()
             })
@@ -183,6 +187,7 @@ function ChangePhotoModal({ isOpen, onOpen, onClose }: Props) {
                         disabled={!completedCrop}
                         onClick={() => onDownloadCropClick()}
                         variant="ghost"
+                        isLoading={loading}
                     >
                         Upload
                     </Button>
