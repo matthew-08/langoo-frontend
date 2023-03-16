@@ -15,10 +15,11 @@ import {
 } from '@chakra-ui/react'
 import { useState, useRef, useEffect } from 'react'
 import 'react-image-crop/dist/ReactCrop.css'
-import ReactCrop, { Crop } from 'react-image-crop'
+import ReactCrop, { Crop, PixelCrop } from 'react-image-crop'
 import canvasPreview from './canvasPreview'
-import { PixelCrop } from 'react-image-crop'
 import { apiURL } from '../../../../../utils/apiUrl'
+import { useAppDispatch } from '../../../../../utils/hooks'
+import { checkForSession } from '../../../../../features/authSlice'
 
 interface Props {
     isOpen: boolean
@@ -29,6 +30,7 @@ interface Props {
 const validFileTypes = ['image/jpg', 'image/jpeg', 'image/png']
 
 function ChangePhotoModal({ isOpen, onOpen, onClose }: Props) {
+    const dispatch = useAppDispatch()
     const [crop, setCrop] = useState<Crop | undefined>({
         unit: 'px', // Can be 'px' or '%'
         x: 50,
@@ -69,7 +71,10 @@ function ChangePhotoModal({ isOpen, onOpen, onClose }: Props) {
                 body: formData,
                 method: 'POST',
                 credentials: 'include',
-            }).then(() => onClose())
+            }).then(() => {
+                dispatch(checkForSession())
+                onClose()
+            })
         }
     }
     function onDownloadCropClick() {

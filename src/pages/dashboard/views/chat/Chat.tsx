@@ -24,6 +24,7 @@ import CurrentConversation from './components/CurrentConversation'
 import MainLogo from '../../../../global_components/MainLogo'
 import IMAGES from '../../../../utils/images'
 import whiteFilter from '../../../../utils/whiteFilter'
+import Loading from '../../../../global_components/Loading'
 
 export default function Chat() {
     const conversationList = useAppSelector(
@@ -56,9 +57,11 @@ export default function Chat() {
     let conversations
 
     if (convoListLoading) {
-        conversations = <div>Loading</div>
+        conversations = (
+            <Loading loadingType="section" width="80px" height="80px" />
+        )
     } else if (conversationList.length === 0) {
-        conversations = <div>You dont have any conversations yet.</div>
+        conversations = <Text>You dont have any conversations yet.</Text>
     } else {
         conversations = conversationList.map((convo) => (
             <UserConversation key={uuid()} convo={convo} />

@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react'
 import { AttachmentIcon, ChatIcon } from '@chakra-ui/icons'
 import { Conversation } from '../../../../../types/types'
-import { useAppDispatch, useAppSelector } from '../../../../../utils/hooks'
+import { useAppSelector } from '../../../../../utils/hooks'
 import messageHandler from '../../../../../utils/messageHandler'
 
 function MessageInput({ convo }: { convo: Conversation | undefined }) {
@@ -17,9 +17,8 @@ function MessageInput({ convo }: { convo: Conversation | undefined }) {
     const [input, setInput] = useState<string>('')
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        if (convo && currentUser) {
+        if (convo && currentUser && input) {
             await messageHandler(convo, currentUser, input).then((res) => {
-                console.log(res)
                 setInput('')
             })
         }

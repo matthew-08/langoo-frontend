@@ -67,7 +67,7 @@ export default function EditProfileModal({ isOpen, onClose, onOpen }: Props) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dataToPut),
             credentials: 'include',
-        }).then((res) => {
+        }).then(() => {
             dispatch(checkForSession())
             return onClose()
         })
