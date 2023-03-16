@@ -15,12 +15,13 @@ import {
     ModalFooter,
     Button,
 } from '@chakra-ui/react'
+import { useNavigate } from 'react-router-dom'
+import { v4 as uuid } from 'uuid'
 import { useAppSelector } from '../../../utils/hooks'
 import getUserImage from '../../../utils/getUserImg'
 import IMAGES from '../../../utils/images'
 import whiteFilter from '../../../utils/whiteFilter'
 import SidebarButton from './SidebarButton'
-import { useNavigate } from 'react-router-dom'
 import { apiURL } from '../../../utils/apiUrl'
 
 interface Props {
@@ -37,7 +38,7 @@ export default function Sidebar({ switchView, activeView }: Props) {
     const handleLogOut = async () => {
         await fetch(`${apiURL}/auth/logout`, {
             credentials: 'include',
-        }).then((res) => {
+        }).then(() => {
             navigate('/')
         })
     }
@@ -73,6 +74,7 @@ export default function Sidebar({ switchView, activeView }: Props) {
             >
                 {viewOptions.map((view) => (
                     <SidebarButton
+                        key={uuid()}
                         activeView={activeView}
                         buttonType={view}
                         switchView={switchView}

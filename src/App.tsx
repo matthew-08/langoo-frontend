@@ -8,8 +8,6 @@ import { onMessageDelete, onMessageEdit } from './features/messagesSlice'
 import socket from './socket'
 import Loading from './global_components/Loading'
 import Footer from './global_components/Footer'
-import { Grid } from 'react-loader-spinner'
-import { Flex } from '@chakra-ui/react'
 import { MessagePayload, SocketMessage } from './types/types'
 
 function App() {

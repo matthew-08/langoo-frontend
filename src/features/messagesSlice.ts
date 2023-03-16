@@ -7,14 +7,12 @@ import {
     Message,
     InitialConversationFetch,
     MessagePayload,
+    ConversationId,
+    ConversationMessages,
+    MessagesState,
 } from '../types/types'
 import { addConvo, fetchConversations } from './convoSlice'
-import { ConversationId, ConversationMessages } from '../types/types'
-import { MessagesState } from '../types/types'
 import { apiURL } from '../utils/apiUrl'
-
-
-
 
 const initialState = {
     conversationMessages: {} as ConversationMessages,
@@ -33,9 +31,7 @@ export const fetchMessages = createAsyncThunk<
         state: RootState
     }
 >('messages/fetchMessages', async (convoId) => {
-    const messages = await fetch(
-        `${apiURL}/convo/getAllMessages/${convoId}`
-    )
+    const messages = await fetch(`${apiURL}/convo/getAllMessages/${convoId}`)
     const payload = {
         messages: await messages.json(),
         convoId,
@@ -72,12 +68,15 @@ const messagesSlice = createSlice({
             }
         },
         onMessageDelete(state, action: PayloadAction<MessagePayload>) {
-          const { conversationId } = action.payload
-          const { message } = action.payload
-          const convoMessagesRef = state.conversationMessages[conversationId].messages
-          const updateState = convoMessagesRef.filter(msg => msg.timestamp !== message.timestamp)
-          state.conversationMessages[conversationId].messages = updateState
-        }
+            const { conversationId } = action.payload
+            const { message } = action.payload
+            const convoMessagesRef =
+                state.conversationMessages[conversationId].messages
+            const updateState = convoMessagesRef.filter(
+                (msg) => msg.timestamp !== message.timestamp
+            )
+            state.conversationMessages[conversationId].messages = updateState
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(fetchMessages.pending, (state) => {
@@ -112,6 +111,7 @@ const messagesSlice = createSlice({
         )
     },
 })
-export const { onMessage, onMessageEdit, onMessageDelete } = messagesSlice.actions
+export const { onMessage, onMessageEdit, onMessageDelete } =
+    messagesSlice.actions
 
 export default messagesSlice.reducer

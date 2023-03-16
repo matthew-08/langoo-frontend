@@ -27,7 +27,7 @@ export interface SignUpForm {
     profilePic: string
 }
 
-//USER
+// USER
 export type LanguageChoices =
     | 'japanese'
     | 'vietnamese'
@@ -44,11 +44,12 @@ export interface User {
     bio: string
     lastLogin: number
 }
-//CONVERSATION
+// CONVERSATION
 export type Conversation = {
     userId: string
     latestMessage: Message
     conversationId: ConversationId
+    isPotentialConvo: boolean
     fetched: boolean
 }
 export type ConversationId = string
@@ -62,7 +63,7 @@ export type ConversationMessages = {
     }
 }
 
-//MESSAGE
+// MESSAGE
 export type Message = {
     content: string
     userId: string
@@ -80,6 +81,6 @@ export interface SocketMessage extends MessagePayload {
     to: string
 }
 
-//VIEW
+// VIEW
 export type SetActiveView = (arg0: Views) => void
 export type Views = 'chat' | 'discover' | 'settings'

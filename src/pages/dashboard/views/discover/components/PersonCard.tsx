@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
     GridItem,
     Box,
@@ -10,6 +10,7 @@ import {
     Circle,
     Flex,
     Button,
+    useDisclosure,
 } from '@chakra-ui/react'
 import { ChatIcon } from '@chakra-ui/icons'
 import { v4 as uuidv4 } from 'uuid'
@@ -19,6 +20,7 @@ import { addConvo, setActiveConvo } from '../../../../../features/convoSlice'
 import getflag from '../../../../../utils/getFlag'
 import { viewStatusSet } from '../../../../../features/viewSlice'
 import getUserImage from '../../../../../utils/getUserImg'
+import NewChatModal from './NewChatModal'
 
 export default function PersonCard({
     user,
@@ -36,16 +38,17 @@ export default function PersonCard({
     const isSmallerThan700 = useAppSelector(
         (state) => state.viewSlice.smallerThan700
     )
+    const { isOpen, onOpen, onClose } = useDisclosure()
 
     const handleClick = () => {
-        if (isSmallerThan700) {
-            dispatch(viewStatusSet('userConversation'))
-        }
         if (convoExists) {
+            if (isSmallerThan700) {
+                dispatch(viewStatusSet('userConversation'))
+            }
             dispatch(setActiveConvo(convoExists.conversationId))
             setActiveView('chat')
         } else {
-            dispatch(addConvo(user.userId)).then(() => setActiveView('chat'))
+            onOpen()
         }
     }
     console.log(user.learningLanguages)
@@ -125,6 +128,13 @@ export default function PersonCard({
             >
                 Chat
             </Button>
+            <NewChatModal
+                userClicked={user}
+                isOpen={isOpen}
+                onOpen={onOpen}
+                onClose={onClose}
+                setActiveView={setActiveView}
+            />
         </GridItem>
     )
 }

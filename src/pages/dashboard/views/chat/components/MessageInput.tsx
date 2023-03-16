@@ -14,6 +14,7 @@ import { onMessage } from '../../../../../features/messagesSlice'
 import { useAppDispatch, useAppSelector } from '../../../../../utils/hooks'
 import { updateLatestMessage } from '../../../../../features/convoSlice'
 import { apiURL } from '../../../../../utils/apiUrl'
+import messageHandler from '../../../../../utils/messageHandler'
 
 function MessageInput({ convo }: { convo: Conversation | undefined }) {
     const dispatch = useAppDispatch()
@@ -23,7 +24,8 @@ function MessageInput({ convo }: { convo: Conversation | undefined }) {
         e.preventDefault()
         setInput((prev) => '')
         if (convo) {
-            const date = new Date().getTime()
+            messageHandler(convo, currentUser as string, input)
+            /* const date = new Date().getTime()
             const message = {
                 timestamp: date,
                 content: input,
@@ -66,7 +68,7 @@ function MessageInput({ convo }: { convo: Conversation | undefined }) {
                 },
                 conversationId: convo.conversationId,
                 to: convo.userId,
-            })
+            }) */
         }
     }
     return (
