@@ -32,6 +32,8 @@ export default function CurrentConversation() {
     )
     useEffect(() => {
         socket.on('chat_message', (data: MessagePayload) => {
+            console.log('socket received message')
+            console.log(data)
             dispatch(onMessage(data))
         })
         socket.on('on_edit', () => {
