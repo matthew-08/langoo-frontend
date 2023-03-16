@@ -30,6 +30,9 @@ export default function CurrentConversation() {
                 currentConvo.conversationId
             ].messages
     )
+    const activeConvo = useAppSelector(
+        (state) => state.convoSlice.activeConvo?.conversationId
+    )
     useEffect(() => {
         socket.on('chat_message', (data: MessagePayload) => {
             console.log('socket received message')
@@ -49,7 +52,7 @@ export default function CurrentConversation() {
             dispatch(fetchMessages(currentConvo.conversationId))
             dispatch(conversationFetched(currentConvo.conversationId))
         }
-    }, [])
+    }, [activeConvo])
 
     return (
         <Flex

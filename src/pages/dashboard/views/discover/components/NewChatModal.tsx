@@ -53,6 +53,7 @@ function NewChatModal({
                 }
             })
             .then(() => {
+                setLoading(false)
                 onClose()
                 setActiveView('chat')
             })
@@ -77,7 +78,7 @@ function NewChatModal({
                     <Button colorScheme="blue" mr={3} onClick={onClose}>
                         Cancel
                     </Button>
-                    <Button variant="ghost" type="submit">
+                    <Button variant="ghost" type="submit" isLoading={loading}>
                         Message
                     </Button>
                 </ModalFooter>
