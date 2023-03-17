@@ -32,3 +32,5 @@ Langoo is a language-exchange themed chat app built in order to further my under
   - PostgreSQL
   - Redis
   - Socket.io
+  - AWS S3
+  -

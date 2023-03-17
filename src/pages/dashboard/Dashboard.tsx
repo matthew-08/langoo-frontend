@@ -29,7 +29,6 @@ export default function Dashboard() {
                 return <Chat />
         }
     }
-
     const switchView = (view: Views) => setActiveView(view)
 
     return (
