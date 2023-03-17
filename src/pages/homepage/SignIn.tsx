@@ -21,12 +21,12 @@ import * as Yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useNavigate } from 'react-router-dom'
 import { isFulfilled } from '@reduxjs/toolkit'
+import { AiOutlineUser } from 'react-icons/ai'
+import { LockIcon } from '@chakra-ui/icons'
 import { logInAttempt } from '../../features/authSlice'
 import { useAppDispatch } from '../../utils/hooks'
 import { LoginForm } from '../../types/types'
 import IMAGES from '../../utils/images'
-import { AiOutlineUser } from 'react-icons/ai'
-import { LockIcon } from '@chakra-ui/icons'
 import MainLogo from '../../global_components/MainLogo'
 
 const validationSchema = Yup.object().shape({
@@ -72,7 +72,7 @@ function SignIn() {
             spacing="1rem"
             padding="1rem"
             borderRadius="20px"
-            backgroundColor={'whiteAlpha.100'}
+            backgroundColor="whiteAlpha.100"
             onSubmit={handleSubmit(onSubmit)}
             mt="4rem"
         >
@@ -104,15 +104,15 @@ function SignIn() {
                         placeholder="Password"
                         autoComplete="off"
                         size="lg"
-                        type={'password'}
+                        type="password"
                     />
-                    <InputLeftElement children={<LockIcon mt={'0.5rem'} />} />
+                    <InputLeftElement children={<LockIcon mt="0.5rem" />} />
                 </InputGroup>
                 <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
             </FormControl>
-            <Text ml={'auto'} w="100%">
+            <Text ml="auto" w="100%">
                 Forgot your password?
-                <Text as={'a'} color="blue.400">
+                <Text as="a" color="blue.400">
                     {' '}
                     Click here.
                 </Text>
@@ -121,9 +121,9 @@ function SignIn() {
                 as={ButtonGroup}
                 size="lg"
                 padding="0.2rem"
-                alignContent={'center'}
+                alignContent="center"
                 justifyContent="center"
-                width={'100%'}
+                width="100%"
                 pb="2rem"
             >
                 <Button
@@ -142,9 +142,9 @@ function SignIn() {
                     disabled={!dirtyFields}
                     onClick={() => navigate('/register')}
                     width="100%"
-                    variant={'outline'}
+                    variant="outline"
                     color="blue.200"
-                    border={'2px'}
+                    border="2px"
                     borderColor="blue.200"
                 >
                     Sample Account
@@ -152,9 +152,9 @@ function SignIn() {
                 <Text>
                     Don't have an account?{' '}
                     <Text
-                        as={'a'}
+                        as="a"
                         color="blue.400"
-                        cursor={'pointer'}
+                        cursor="pointer"
                         onClick={() => navigate('/register')}
                     >
                         Sign up now!
