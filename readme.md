@@ -32,3 +32,15 @@ Langoo is a language-exchange themed chat app built in order to further my under
   - PostgreSQL
   - Redis
   - Socket.io
+
+# Getting Started
+
+1. Clone the repository.
+2. Install dependencies.
+
+
+    ```npm install```
+
+3. Start the app.
+
+`npm run dev`
