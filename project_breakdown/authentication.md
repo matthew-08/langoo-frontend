@@ -4,7 +4,7 @@
 
 Most of my projects that preceded this one utilized JWTs in order to manage authentication and persistant user sessions. For this project I wanted to explore the world of sessions.
 
-## Client-side authentication:
+### Client-side authentication:
 
 Some basic form validation is done on the front-end for both the register and sign in forms. I used react-hook-form for managing form state and the yup libary for defining schemas and relevant error messages.
 
@@ -31,7 +31,7 @@ export default function PrivateRoutes() {
 }
 ```
 
-## Server-side authentication
+### Server-side authentication
 
 Authentication for this project is handled by session IDs which are stored in a Redis DB and implemented with express-session.
 

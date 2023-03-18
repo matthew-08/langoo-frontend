@@ -85,6 +85,7 @@ const convoSlice = createSlice({
             }
         },
         conversationFetched(state, action: PayloadAction<ConversationId>) {
+            console.log(action.payload)
             const conversationId = action.payload
             const findConvo = state.conversations.find(
                 (convo) => convo.conversationId === conversationId

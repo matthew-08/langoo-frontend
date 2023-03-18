@@ -24,7 +24,6 @@ Langoo is a language-exchange themed chat app built in order to further my under
   - TypeScript
   - ChakraUI
   - Redux Toolkit
-  - Socket.io
 
 - Backend
 
@@ -33,29 +32,13 @@ Langoo is a language-exchange themed chat app built in order to further my under
   - PostgreSQL
   - Redis
   - Socket.io
-<<<<<<< HEAD
   - AWS S3
-
-  Clone the repository.
-
-Install dependencies.
-
-npm install
-
-Start the app.
-
-npm run dev
-=======
 
 # Getting Started
 
 1. Clone the repository.
 2. Install dependencies.
-
-
-    ```npm install```
+   `npm install`
 
 3. Start the app.
-
-`npm run dev`
->>>>>>> remotes/origin/main
+   `npm run dev`
