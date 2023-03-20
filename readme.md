@@ -48,7 +48,6 @@ Langoo is a language-exchange themed chat app built in order to further my under
 
 - [Authentication](project_breakdown/authentication.md)
 - [State Management](project_breakdown/state-management.md)
-- [Database Design](project_breakdown/database-design.md)
-- [Socket.io](project_breakdown/socket.io.md)
-- [Image Handling](project_breakdown/image-handling.md)
 - [Data Flow](project_breakdown/data-flow.md)
+- [Database Design](project_breakdown/database-design.md)
+- [Image Handling](project_breakdown/image-handling.md)
