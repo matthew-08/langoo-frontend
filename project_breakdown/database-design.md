@@ -1,3 +1,3 @@
 # Database Design
 
-![image description](/client/public/chatappdb.jpg)
+![image description](../public//chatappdb.jpg)
