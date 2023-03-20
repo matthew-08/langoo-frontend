@@ -36,7 +36,7 @@ Langoo is a language-exchange themed chat app built in order to further my under
   - AWS S3
 
 
-# Getting Started
+## Getting Started
 
 1. Clone the repository.
 2. Install dependencies.
@@ -47,3 +47,6 @@ Langoo is a language-exchange themed chat app built in order to further my under
 3. Start the development environment.
 
     ```npm run dev```
+
+## Project Breakdown (work in progress):
+[Authentication](project_breakdown/authentication)
