@@ -33,7 +33,6 @@ Langoo is a language-exchange themed chat app built in order to further my under
   - PostgreSQL
   - Redis
   - Socket.io
-<<<<<<< HEAD
   - AWS S3
 
   Clone the repository.
@@ -45,7 +44,6 @@ npm install
 Start the app.
 
 npm run dev
-=======
 
 # Getting Started
 
@@ -55,7 +53,6 @@ npm run dev
 
     ```npm install```
 
-3. Start the app.
+3. Start the development environment.
 
-`npm run dev`
->>>>>>> remotes/origin/main
+    ```npm run dev```
