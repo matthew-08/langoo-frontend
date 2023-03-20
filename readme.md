@@ -1,5 +1,9 @@
 # Langooo
 
+#### Go to [live app](https://langoo-frontend-nf5u.vercel.app/)
+
+#### Go to [backend repository](https://github.com/matthew-08/Langooo-Backend)
+
 Langoo is a language-exchange themed chat app built in order to further my understanding of WebSockets, Redux, and Redis. Users are able to engagine in real-time conversations and find other users based on their selected languages.
 
 ## Notable features:
