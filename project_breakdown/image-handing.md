@@ -1,0 +1,3 @@
+# Images
+
+In this application, a user can choose to upload their own profile images. An AWS S3 Bucket...
