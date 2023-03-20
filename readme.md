@@ -34,11 +34,21 @@ Langoo is a language-exchange themed chat app built in order to further my under
   - Socket.io
   - AWS S3
 
-# Getting Started
+## Getting Started
 
 1. Clone the repository.
 2. Install dependencies.
    `npm install`
 
-3. Start the app.
+3. Start the development environment.
+
    `npm run dev`
+
+## Project Breakdown (work in progress):
+
+- [Authentication](project_breakdown/authentication.md)
+- [State Management](project_breakdown/state-management.md)
+- [Database Design](project_breakdown/database-design.md)
+- [Socket.io](project_breakdown/socket.io.md)
+- [Image Handling](project_breakdown/image-handling.md)
+- [Data Flow](project_breakdown/data-flow.md)
