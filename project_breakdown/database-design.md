@@ -22,4 +22,4 @@ The database for this application is split into 6 simple tables.
   - The conversations in this application occur between two users. I used a join table called conversation here which simply links the users by their respective user IDs.
 
 - Conversation and Message
-  - The relationship between a conversation and its messages is one-to-many as a conversation can have many messages and each message can only belong to one conversation.
+  - Each message has a foreign key which references a conversation. The relationship between a conversation and its messages is one-to-many as a conversation can have many messages and each message can only belong to one conversation.
