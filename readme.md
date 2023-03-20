@@ -49,4 +49,4 @@ Langoo is a language-exchange themed chat app built in order to further my under
     ```npm run dev```
 
 ## Project Breakdown (work in progress):
-[Authentication](project_breakdown/authentication.md)
+- [Authentication](project_breakdown/authentication.md)
