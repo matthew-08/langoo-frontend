@@ -20,7 +20,10 @@ import { ArrowBackIcon, WarningIcon } from '@chakra-ui/icons'
 import timeago from 'epoch-timeago'
 import { v4 as uuid } from 'uuid'
 import { useAppDispatch, useAppSelector } from '../../../../../utils/hooks'
-import { viewStatusSet } from '../../../../../features/viewSlice'
+import {
+    isSmallerThan700,
+    viewStatusSet,
+} from '../../../../../features/viewSlice'
 import IMAGES from '../../../../../utils/images'
 import getflag from '../../../../../utils/getFlag'
 import getUserImage from '../../../../../utils/getUserImg'
@@ -57,7 +60,14 @@ export default function ChatHeader() {
                 <IconButton
                     aria-label="menu-icon"
                     onClick={() => handleBackClick()}
-                    icon={<ArrowBackIcon w="60px" h="60px" color="black" />}
+                    icon={
+                        <ArrowBackIcon
+                            w="60px"
+                            h="60px"
+                            color="white"
+                            background="none"
+                        />
+                    }
                 />
             )}
             <HStack>
@@ -70,7 +80,7 @@ export default function ChatHeader() {
                     ml="0.5rem"
                 />
                 <VStack textAlign="left" align="flex-start">
-                    <Text fontSize="2xl" mr="auto">
+                    <Text fontSize={isMobileView ? '1rem' : '2xl'} mr="auto">
                         {userDetails?.username}
                     </Text>
                     <Text color="gray.200" fontSize="0.9rem" mr="auto">
@@ -84,7 +94,12 @@ export default function ChatHeader() {
                     </Text>
                 </VStack>
             </HStack>
-            <HStack ml="auto" mr="1rem" spacing="1">
+            <HStack
+                ml="auto"
+                mr="1rem"
+                spacing="1"
+                flexDir={isMobileView ? 'column' : 'row'}
+            >
                 <IconButton
                     background="none"
                     aria-label="account-info"
