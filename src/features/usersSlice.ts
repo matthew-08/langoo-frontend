@@ -29,7 +29,6 @@ const usersSlice = createSlice({
             fetchUsers.fulfilled,
             (state, action: PayloadAction<User[]>) => {
                 state.loading = false
-                console.log(action.payload)
                 state.allUsers = action.payload
             }
         )

@@ -87,6 +87,7 @@ function SignIn() {
                         size="lg"
                     />
                     <InputLeftElement
+                        // eslint-disable-next-line react/no-children-prop
                         children={
                             <Icon boxSize={6} mt="0.5rem" as={AiOutlineUser} />
                         }

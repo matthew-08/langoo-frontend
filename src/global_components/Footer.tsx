@@ -4,19 +4,19 @@ import { Flex, Text } from '@chakra-ui/react'
 function Footer() {
     return (
         <Flex
-            as={'footer'}
+            as="footer"
             width="100%"
-            position={'absolute'}
+            position="absolute"
             bottom="0"
-            align={'center'}
+            align="center"
             justify="center"
-            mt={'3rem'}
+            mt="3rem"
         >
             <Text>Made by {'   '}</Text>
             <Text
-                ml={'0.2rem'}
-                color={'blue.400'}
-                as={'a'}
+                ml="0.2rem"
+                color="blue.400"
+                as="a"
                 href="http://github.com/matthew-08"
             >
                 Matthew Crosby

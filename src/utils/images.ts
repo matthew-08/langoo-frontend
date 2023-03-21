@@ -36,7 +36,7 @@ const IMAGES = {
     chat3,
     logout,
     settings,
-    loginIcon
+    loginIcon,
 }
 
 export default IMAGES
