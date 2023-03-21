@@ -14,12 +14,8 @@ import { Form } from 'react-router-dom'
 import getUserImage from '../../../../../utils/getUserImg'
 import { useAppDispatch, useAppSelector } from '../../../../../utils/hooks'
 import { ConversationId, Message } from '../../../../../types/types'
-import IMAGES from '../../../../../utils/images'
-import socket from '../../../../../socket'
 import useOnHoverOutside from '../../../../../hooks/useOnHover'
-import { onMessageEdit } from '../../../../../features/messagesSlice'
 import DeleteMsgModal from './DeleteMsgModal'
-import { apiURL } from '../../../../../utils/apiUrl'
 import { messageEdit } from '../../../../../utils/messageHandler'
 
 export default function ChatMessage({ message }: { message: Message }) {
@@ -81,7 +77,7 @@ export default function ChatMessage({ message }: { message: Message }) {
     if (isCurrentUser) {
         chatMessage = (
             <Flex
-                maxW="40%"
+                maxW={{ base: '60%', lg: '45%' }}
                 ml={isCurrentUser ? 'auto' : ''}
                 mr={isCurrentUser ? '' : 'auto'}
                 mb="1.2rem"

@@ -6,9 +6,7 @@ import {
     Tab,
     VStack,
     Image,
-    SimpleGrid,
     TabPanels,
-    TabPanel,
 } from '@chakra-ui/react'
 import { v4 as uuid } from 'uuid'
 import IMAGES from '../../../../utils/images'
@@ -95,7 +93,7 @@ export default function Discover({
             {loading ? (
                 <div>Loading...</div>
             ) : (
-                <TabPanels>
+                <TabPanels overflow="auto">
                     {languages.map((lang) => (
                         <DiscoverGrid
                             key={uuid()}
