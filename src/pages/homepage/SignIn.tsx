@@ -6,16 +6,12 @@ import {
     FormLabel,
     Input,
     ButtonGroup,
-    Heading,
     Text,
     VStack,
-    Flex,
-    Image,
     InputGroup,
     Icon,
     InputLeftElement,
 } from '@chakra-ui/react'
-import React from 'react'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -107,7 +103,10 @@ function SignIn() {
                         size="lg"
                         type="password"
                     />
-                    <InputLeftElement children={<LockIcon mt="0.5rem" />} />
+                    <InputLeftElement
+                        // eslint-disable-next-line react/no-children-prop
+                        children={<LockIcon mt="0.5rem" />}
+                    />
                 </InputGroup>
                 <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
             </FormControl>

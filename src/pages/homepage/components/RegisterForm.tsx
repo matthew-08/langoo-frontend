@@ -17,21 +17,15 @@ import {
     Select,
     Flex,
     useMediaQuery,
-    Text,
-    IconButton,
-    RadioGroup,
-    Radio,
 } from '@chakra-ui/react'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { redirect } from 'react-router-dom'
-import { useState } from 'react'
 import IMAGES from '../../../utils/images'
 import { SignUpForm } from '../../../types/types'
 import { registerAttempt } from '../../../features/authSlice'
 import { useAppDispatch } from '../../../utils/hooks'
-import whiteFilter from '../../../utils/whiteFilter'
 
 const signUpSchema = Yup.object().shape({
     username: Yup.string()
