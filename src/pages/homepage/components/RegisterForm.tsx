@@ -52,6 +52,9 @@ export default function RegisterForm() {
         handleSubmit,
         formState: { errors },
     } = useForm<SignUpForm>({
+        defaultValues: {
+            languages: ['japanese'],
+        },
         resolver: yupResolver(signUpSchema),
     })
     const dispatch = useAppDispatch()
