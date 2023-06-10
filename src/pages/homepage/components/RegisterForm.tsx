@@ -16,25 +16,25 @@ import {
     Checkbox,
     Select,
     Flex,
+    Text,
     useMediaQuery,
 } from '@chakra-ui/react'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { redirect } from 'react-router-dom'
+import { redirect, useNavigate } from 'react-router-dom'
 import IMAGES from '../../../utils/images'
 import { SignUpForm } from '../../../types/types'
 import { registerAttempt } from '../../../features/authSlice'
 import { useAppDispatch } from '../../../utils/hooks'
+import MainLogo from '../../../global_components/MainLogo'
 
 const signUpSchema = Yup.object().shape({
     username: Yup.string()
-        .required('This field is required')
+        .required('Username is required')
         .min(6, 'Username must be at least 6 characters')
         .max(20, 'Username must not exceed 20 characters'),
-    email: Yup.string()
-        .required('This field is required')
-        .email('email is invalid'),
+    email: Yup.string().required('Email is required').email('Email is invalid'),
     password: Yup.string()
         .required('Password is required')
         .min(6, 'Password must be at least 6 characters')
@@ -57,6 +57,7 @@ export default function RegisterForm() {
         },
         resolver: yupResolver(signUpSchema),
     })
+    const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const [isBiggerThan700] = useMediaQuery('(min-width: 800px)')
     const submitData = async (data: SignUpForm) => {
@@ -78,14 +79,18 @@ export default function RegisterForm() {
     return (
         <VStack
             as="form"
-            spacing="2"
             onSubmit={handleSubmit(submitData)}
             width={isBiggerThan700 ? '60%' : '95%'}
             px={['0.7rem', '1.2rem']}
             py="1rem"
             margin="auto"
+            mt="1rem"
+            backgroundColor="#1d2634"
+            borderRadius="10px"
         >
-            <Heading mb="1rem">Sign Up</Heading>
+            <Heading mb="1rem" fontSize="3rem">
+                Sign Up
+            </Heading>
             <Flex
                 justify="center"
                 flexDir={isBiggerThan700 ? 'row' : 'column'}
@@ -127,6 +132,7 @@ export default function RegisterForm() {
                         {...register('password', { required: true })}
                         size="lg"
                         type="password"
+                        placeholder="Password..."
                     />
                     <FormErrorMessage>
                         {errors.password?.message}
@@ -138,6 +144,7 @@ export default function RegisterForm() {
                         {...register('confirmPassword', { required: true })}
                         size="lg"
                         type="password"
+                        placeholder="Confirm Password..."
                     />
                     <FormErrorMessage>
                         {errors.confirmPassword?.message}
@@ -226,13 +233,25 @@ export default function RegisterForm() {
                     mt="1rem"
                     type="submit"
                     size="lg"
+                    padding="1.5rem"
                     variant="solid"
                     colorScheme="blue"
-                    mb="1.5rem"
+                    mb="1rem"
                 >
                     Create Account
                 </Button>
             </ButtonGroup>
+            <Text textAlign="center" fontSize="1.1rem">
+                Already have an account?{' '}
+                <Text
+                    as="a"
+                    color="blue.400"
+                    cursor="pointer"
+                    onClick={() => navigate('/')}
+                >
+                    Sign In
+                </Text>
+            </Text>
         </VStack>
     )
 }
