@@ -63,7 +63,7 @@ function SignIn() {
 
     const handleTestAccount = () => {
         setValue('username', import.meta.env.VITE_TESTUSER)
-        setValue('password', import.meta.env.VITE_TEST)
+        setValue('password', import.meta.env.VITE_TESTPASSWORD)
     }
 
     return (
