@@ -58,7 +58,9 @@ export default function Chat() {
 
     if (convoListLoading) {
         conversations = (
-            <Loading loadingType="section" width="80px" height="80px" />
+            <Flex mt="3rem" mx="auto">
+                <Loading loadingType="section" width="100px" height="200px" />
+            </Flex>
         )
     } else if (conversationList.length === 0) {
         conversations = <Text>You dont have any conversations yet.</Text>
@@ -69,12 +71,12 @@ export default function Chat() {
     }
 
     return (
-        <Flex as="section" flex="1" maxH="100%">
+        <Flex as="section" flexGrow={1}>
             <VStack
                 // Conversations side-panel
-                width={['100%', '100%', '60%', '45%', '30%']}
                 height="100%"
                 as="aside"
+                w={['100%', '100%', '50%', '45%', '30%']}
                 borderRight="3px solid"
                 borderRightColor="#2d3055"
                 padding="1rem"
@@ -95,7 +97,9 @@ export default function Chat() {
                     />
                     <Input type="text" placeholder="Search conversations..." />
                 </InputGroup>
-                {conversations}
+                <Flex flexDir="column" gap="0.5rem" width="100%">
+                    {conversations}
+                </Flex>
             </VStack>
             {currentConversation ? (
                 <CurrentConversation />

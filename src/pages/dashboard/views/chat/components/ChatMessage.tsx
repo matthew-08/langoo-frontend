@@ -82,7 +82,7 @@ export default function ChatMessage({ message }: { message: Message }) {
     if (isCurrentUser) {
         chatMessage = (
             <Flex
-                maxW={['90%', '95%']}
+                maxW={['90%', '100%']}
                 ml={isCurrentUser ? 'auto' : ''}
                 mr={isCurrentUser ? '' : 'auto'}
                 mb="1.2rem"

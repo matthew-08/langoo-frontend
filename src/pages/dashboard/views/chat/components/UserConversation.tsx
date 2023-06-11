@@ -41,9 +41,8 @@ export default function UserConversation({ convo }: Props) {
     )
     return (
         <Flex
-            maxW="100%"
-            minW="100%"
             boxShadow="base"
+            minW="100%"
             padding={['0.5rem', '0.7rem', '0.8rem', '.8rem', '1rem', '1.5rem']}
             borderRadius="10px"
             overflow="hidden"
@@ -95,10 +94,10 @@ export default function UserConversation({ convo }: Props) {
                             : ''}
                     </Text>
                 </Flex>
-                <Text isTruncated maxW="80%" fontSize="1rem">
+                <Text isTruncated fontSize="1rem" maxW="25ch">
                     {lastMessage?.content || ''}
                 </Text>
-                {!lastMessageIsUsers && (
+                {/* {!lastMessageIsUsers && (
                     <Flex
                         fontSize="0.8rem"
                         position="absolute"
@@ -113,7 +112,7 @@ export default function UserConversation({ convo }: Props) {
                     >
                         Your turn!
                     </Flex>
-                )}
+                )} */}
             </VStack>
         </Flex>
     )

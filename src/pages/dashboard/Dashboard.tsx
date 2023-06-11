@@ -51,7 +51,7 @@ export default function Dashboard() {
                 borderRadius="10px"
             >
                 <Sidebar activeView={activeView} switchView={switchView} />
-                <Flex as="section" flex="1" maxH="100%">
+                <Flex as="section" maxH="100%" w="100%">
                     {currentActiveView()}
                 </Flex>
             </Flex>

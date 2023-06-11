@@ -85,15 +85,13 @@ export default function CurrentConversation() {
                     },
                 }}
             >
-                <Flex flexDir="column">
-                    {convoMessages &&
-                        convoMessages.map((message) => (
-                            <ChatMessage
-                                key={message.timestamp}
-                                message={message}
-                            />
-                        ))}
-                </Flex>
+                {convoMessages &&
+                    convoMessages.map((message) => (
+                        <ChatMessage
+                            key={message.timestamp}
+                            message={message}
+                        />
+                    ))}
             </Flex>
             <MessageInput convo={currentConvo} />
         </Flex>
