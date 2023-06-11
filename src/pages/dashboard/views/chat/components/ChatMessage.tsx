@@ -85,7 +85,7 @@ export default function ChatMessage({ message }: { message: Message }) {
                 maxW={['90%', '100%']}
                 ml={isCurrentUser ? 'auto' : ''}
                 mr={isCurrentUser ? '' : 'auto'}
-                mb="1.2rem"
+                mb="0.1rem"
                 position="relative"
                 onMouseEnter={() => setOpen(true)}
                 ref={messageRef}
@@ -159,7 +159,7 @@ export default function ChatMessage({ message }: { message: Message }) {
                 maxW={['90%']}
                 ml={isCurrentUser ? 'auto' : ''}
                 mr={isCurrentUser ? '' : 'auto'}
-                mb="1.2rem"
+                mb="0.1rem"
             >
                 <Image
                     mt="auto"

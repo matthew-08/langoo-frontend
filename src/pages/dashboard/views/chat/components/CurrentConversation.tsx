@@ -67,7 +67,7 @@ export default function CurrentConversation() {
                 as="main"
                 flex="1"
                 flexDir="column-reverse"
-                gap="1.5rem"
+                gap="1rem"
                 maxWidth="100%"
                 padding="1rem"
                 maxH="100%"
