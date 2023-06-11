@@ -31,7 +31,9 @@ export const fetchMessages = createAsyncThunk<
         state: RootState
     }
 >('messages/fetchMessages', async (convoId) => {
-    const messages = await fetch(`${apiURL}/convo/getAllMessages/${convoId}`)
+    const messages = await fetch(`${apiURL}/convo/getAllMessages/${convoId}`, {
+        credentials: 'include',
+    })
     const payload = {
         messages: await messages.json(),
         convoId,

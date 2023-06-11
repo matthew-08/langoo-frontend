@@ -43,14 +43,11 @@ function NewChatModal({
     )
 
     const submitConvo = (e: React.FormEvent) => {
-        console.log('submit convo')
         e.preventDefault()
         setLoading(true)
         dispatch(addConvo(userClicked.userId))
             .then(async (res) => {
-                console.log(res)
                 if (addConvo.fulfilled.match(res)) {
-                    console.log('going to messagehandler')
                     const newConvo = res.payload
                     await messageHandler(newConvo, currentUserId!, input)
                 }

@@ -51,7 +51,6 @@ export default function PersonCard({
             onOpen()
         }
     }
-    console.log(user.learningLanguages)
     return (
         <GridItem
             borderRadius="10px"
