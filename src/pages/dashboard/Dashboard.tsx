@@ -1,4 +1,4 @@
-import { Flex } from '@chakra-ui/react'
+import { Flex, Text } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import Sidebar from './components/Sidebar'
 import { Views } from '../../types/types'
@@ -8,6 +8,7 @@ import Settings from './views/settings/Settings'
 import { useAppDispatch } from '../../utils/hooks'
 import { fetchUsers } from '../../features/usersSlice'
 import useSocketSetup from '../../utils/socketSetup'
+import MainLogo from '../../global_components/MainLogo'
 
 export default function Dashboard() {
     const [activeView, setActiveView] = useState<Views>('chat')
@@ -37,7 +38,8 @@ export default function Dashboard() {
             justifyContent="center"
             align="center"
             height="100vh"
-            minH="800px"
+            flexDir="column"
+            minH="100%"
         >
             <Flex
                 as="section"

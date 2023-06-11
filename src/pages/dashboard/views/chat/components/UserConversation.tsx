@@ -47,6 +47,7 @@ export default function UserConversation({ convo }: Props) {
             padding={['0.5rem', '0.7rem', '0.8rem', '.8rem', '1rem', '1.5rem']}
             borderRadius="10px"
             overflow="hidden"
+            minH="100px"
             backgroundColor={isActiveConvo ? 'blue.600' : '#2d3055'}
             align="center"
             cursor="pointer"
@@ -84,20 +85,17 @@ export default function UserConversation({ convo }: Props) {
                 fontSize={['1rem', '0.8rem', '0.9rem', '0.9rem', '1.3rem']}
                 overflow="hidden"
             >
-                <Flex
-                    justify="space-between"
-                    align="center"
-                    minW="100%"
-                    overflow="hidden"
-                >
-                    <Text fontWeight="bold">{user?.username}</Text>
-                    <Text fontSize="0.8rem">
+                <Flex justify="space-between" align="center" minW="100%">
+                    <Text fontWeight="bold" isTruncated maxW="180px">
+                        {user?.username}
+                    </Text>
+                    <Text fontSize={['0.7rem', '0.8rem']} textAlign="right">
                         {lastMessage?.timestamp
                             ? timeago(lastMessage?.timestamp)
                             : ''}
                     </Text>
                 </Flex>
-                <Text isTruncated maxW="85%" fontSize="1rem">
+                <Text isTruncated maxW="80%" fontSize="1rem">
                     {lastMessage?.content || ''}
                 </Text>
                 {!lastMessageIsUsers && (
@@ -111,7 +109,7 @@ export default function UserConversation({ convo }: Props) {
                         borderRadius="10px"
                         background="green.100"
                         color="blue.900"
-                        fontWeight={'bold'}
+                        fontWeight="bold"
                     >
                         Your turn!
                     </Flex>

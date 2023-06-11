@@ -68,6 +68,7 @@ export default function CurrentConversation() {
                 flex="1"
                 flexDir="column-reverse"
                 gap="1.5rem"
+                maxWidth="100%"
                 padding="1rem"
                 maxH="100%"
                 overflow="auto"
@@ -84,7 +85,7 @@ export default function CurrentConversation() {
                     },
                 }}
             >
-                <Box>
+                <Flex flexDir="column">
                     {convoMessages &&
                         convoMessages.map((message) => (
                             <ChatMessage
@@ -92,7 +93,7 @@ export default function CurrentConversation() {
                                 message={message}
                             />
                         ))}
-                </Box>
+                </Flex>
             </Flex>
             <MessageInput convo={currentConvo} />
         </Flex>

@@ -72,7 +72,7 @@ export default function Chat() {
         <Flex as="section" flex="1" maxH="100%">
             <VStack
                 // Conversations side-panel
-                width={checkIsSmallerThan700 ? '100%' : '30%'}
+                width={['100%', '100%', '60%', '45%', '30%']}
                 height="100%"
                 as="aside"
                 borderRight="3px solid"

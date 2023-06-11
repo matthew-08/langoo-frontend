@@ -58,6 +58,8 @@ export default function ChatHeader() {
         >
             {isMobileView && (
                 <IconButton
+                    ml="0.5rem"
+                    py="1.5rem"
                     aria-label="menu-icon"
                     onClick={() => handleBackClick()}
                     icon={
@@ -71,16 +73,23 @@ export default function ChatHeader() {
                 />
             )}
             <HStack>
-                <Image
-                    src={getUserImage(userDetails?.userImg)}
-                    boxSize="80px"
-                    borderRadius="full"
-                    border="4px"
-                    borderColor="blue.400"
-                    ml="0.5rem"
-                />
-                <VStack textAlign="left" align="flex-start">
-                    <Text fontSize={isMobileView ? '1rem' : '2xl'} mr="auto">
+                {!isMobileView && (
+                    <Image
+                        src={getUserImage(userDetails?.userImg)}
+                        boxSize="80px"
+                        borderRadius="full"
+                        border="4px"
+                        borderColor="blue.400"
+                        ml="0.5rem"
+                    />
+                )}
+                <VStack textAlign="left" align="flex-start" ml="0.2rem">
+                    <Text
+                        fontSize={isMobileView ? '1rem' : '2xl'}
+                        mr="auto"
+                        isTruncated
+                        maxW={['160px', '300px']}
+                    >
                         {userDetails?.username}
                     </Text>
                     <Text color="gray.200" fontSize="0.9rem" mr="auto">

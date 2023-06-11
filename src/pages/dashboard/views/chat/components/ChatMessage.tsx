@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react'
 import timeago from 'epoch-timeago'
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Form } from 'react-router-dom'
 import getUserImage from '../../../../../utils/getUserImg'
 import { useAppDispatch, useAppSelector } from '../../../../../utils/hooks'
@@ -49,6 +49,7 @@ export default function ChatMessage({ message }: { message: Message }) {
     let chatMessage
 
     let timestamp
+
     const currentTime = Math.floor(Date.now() / 1000)
     if (currentTime - Number(message.timestamp) > 1800) {
         timestamp = timeago(message.timestamp)
@@ -59,6 +60,10 @@ export default function ChatMessage({ message }: { message: Message }) {
     const closeHoverMenu = () => {
         setOpen(false)
     }
+
+    useEffect(() => {
+        console.log(message.content)
+    }, [])
 
     const handleSumbit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -77,7 +82,7 @@ export default function ChatMessage({ message }: { message: Message }) {
     if (isCurrentUser) {
         chatMessage = (
             <Flex
-                maxW={{ base: '80%', lg: '45%' }}
+                maxW={['90%', '95%']}
                 ml={isCurrentUser ? 'auto' : ''}
                 mr={isCurrentUser ? '' : 'auto'}
                 mb="1.2rem"
@@ -127,7 +132,9 @@ export default function ChatMessage({ message }: { message: Message }) {
                             />
                         </Flex>
                     ) : (
-                        <Text>{message.content}</Text>
+                        <Text maxW={['150px', '175px', '350px']}>
+                            {message.content}
+                        </Text>
                     )}
                 </Flex>
                 <Image
@@ -149,7 +156,7 @@ export default function ChatMessage({ message }: { message: Message }) {
     } else {
         chatMessage = (
             <Flex
-                maxW="40%"
+                maxW={['90%']}
                 ml={isCurrentUser ? 'auto' : ''}
                 mr={isCurrentUser ? '' : 'auto'}
                 mb="1.2rem"
@@ -167,7 +174,9 @@ export default function ChatMessage({ message }: { message: Message }) {
                     padding="1rem"
                     borderRadius="10px"
                 >
-                    <Text>{message.content}</Text>
+                    <Text maxW={['150px', '175px', '350px']}>
+                        {message.content}
+                    </Text>
                 </Flex>
             </Flex>
         )
