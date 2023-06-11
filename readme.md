@@ -6,6 +6,9 @@
 
 Langoo is a language-exchange themed chat app built in order to further my understanding of WebSockets, Redux, and Redis. Users are able to engagine in real-time conversations and find other users based on their selected languages.
 
+![image](https://github.com/matthew-08/langoo-frontend/assets/114291570/6fd36f4c-7043-4c2e-8806-e40db2fcd3cd)
+
+
 ## Notable features:
 
 - Real-time chatting: The app uses socket.io to provide real-time messaging between users and enables them to edit and delete messages in real time.
